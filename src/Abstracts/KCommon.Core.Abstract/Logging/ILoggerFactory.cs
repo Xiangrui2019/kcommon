@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KCommon.Core.Logging
+namespace KCommon.Core.Abstract.Logging
 {
     public interface ILoggerFactory
     {

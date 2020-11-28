@@ -1,5 +1,5 @@
-﻿using System;
-using KCommon.Core.Abstract.Components;
+﻿using KCommon.Core.Abstract.Components;
+using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Components;
 using KCommon.Core.Logging;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using KCommon.Core.Abstract.Logging;
 
 namespace KCommon.Core.Logging
 {
