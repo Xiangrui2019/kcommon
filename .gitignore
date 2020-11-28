@@ -150,6 +150,9 @@ nCrunchTemp_*
 *.mm.*
 AutoTest.Net/
 
+# Jetbrains Rider
+.idea
+
 # Web workbench (sass)
 .sass-cache/
 
