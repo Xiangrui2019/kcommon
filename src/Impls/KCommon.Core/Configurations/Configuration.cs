@@ -1,6 +1,7 @@
 ﻿using System;
 using KCommon.Core.Abstract.Components;
 using KCommon.Core.Components;
+using KCommon.Core.Logging;
 
 namespace KCommon.Core.Configurations
 {
@@ -33,6 +34,7 @@ namespace KCommon.Core.Configurations
 
         public Configuration RegisterCommonComponents()
         {
+            SetDefault<ILoggerFactory, EmptyLoggerFactory>();
             return this;
         }
         

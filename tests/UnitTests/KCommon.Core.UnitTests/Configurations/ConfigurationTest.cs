@@ -1,4 +1,5 @@
-﻿using KCommon.Core.Configurations;
+﻿using KCommon.Core.Components;
+using KCommon.Core.Configurations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace KCommon.Core.UnitTests.Configurations
