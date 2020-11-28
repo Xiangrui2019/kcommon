@@ -40,7 +40,7 @@ namespace KCommon.Core.Configurations
         public Configuration AddCommonComponents()
         {
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
-            SetDefault<IBinarySerializer, DefaultBinarySerializer>();
+            SetDefault<IBinarySerializer, EmptyBinarySerializer>();
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             SetDefault<HttpClient, HttpClient>();
             SetDefault<IHttpService, HttpService>();
