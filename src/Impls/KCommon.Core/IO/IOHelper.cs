@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using KCommon.Core.Abstract.IO;
 using KCommon.Core.Abstract.Logging;
+using KCommon.Core.Extensions;
 using KCommon.Core.Utilities;
 
 namespace KCommon.Core.IO
