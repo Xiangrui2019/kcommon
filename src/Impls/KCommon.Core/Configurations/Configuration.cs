@@ -1,8 +1,10 @@
 ﻿using System.Net.Http;
 using KCommon.Core.Abstract.Components;
+using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Abstract.Serializing;
 using KCommon.Core.Components;
+using KCommon.Core.Http;
 using KCommon.Core.Logging;
 using KCommon.Core.Serializing;
 
@@ -41,6 +43,7 @@ namespace KCommon.Core.Configurations
             SetDefault<IBinarySerializer, DefaultBinarySerializer>();
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             SetDefault<HttpClient, HttpClient>();
+            SetDefault<IHttpService, HttpService>();
             return this;
         }
         
