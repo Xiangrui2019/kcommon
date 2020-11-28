@@ -1,4 +1,8 @@
-﻿namespace KCommon.Core.Configurations
+﻿using System;
+using KCommon.Core.Abstract.Components;
+using KCommon.Core.Components;
+
+namespace KCommon.Core.Configurations
 {
     public class Configuration
     {
@@ -12,6 +16,30 @@
             return Instance;
         }
         
+        public Configuration SetDefault<TService, TImplementer>(string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+            where TService : class
+            where TImplementer : class, TService
+        {
+            ObjectContainer.Register<TService, TImplementer>(serviceName, life);
+            return this;
+        }
+        public Configuration SetDefault<TService, TImplementer>(TImplementer instance, string serviceName = null)
+            where TService : class
+            where TImplementer : class, TService
+        {
+            ObjectContainer.RegisterInstance<TService, TImplementer>(instance, serviceName);
+            return this;
+        }
+
+        public Configuration RegisterCommonComponents()
+        {
+            return this;
+        }
         
+        public Configuration BuildContainer()
+        {
+            ObjectContainer.Build();
+            return this;
+        }
     }
 }

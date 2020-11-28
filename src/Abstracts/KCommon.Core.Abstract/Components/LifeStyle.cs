@@ -1,6 +1,4 @@
-﻿using KCommon.Core.Abstract.Models;
-
-namespace KCommon.Core.Abstract.Components
+﻿namespace KCommon.Core.Abstract.Components
 {
     public enum LifeStyle
     {
