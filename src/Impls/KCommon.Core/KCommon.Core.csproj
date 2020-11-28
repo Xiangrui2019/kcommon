@@ -12,8 +12,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validations" />
-  </ItemGroup>
-
 </Project>
