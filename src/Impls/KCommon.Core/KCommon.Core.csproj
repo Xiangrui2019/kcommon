@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations" />
+    <ProjectReference Include="..\..\Abstracts\KCommon.Core.Abstract\KCommon.Core.Abstract.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Abstracts\KCommon.Core.Abstract\KCommon.Core.Abstract.csproj" />
+    <Folder Include="Components" />
   </ItemGroup>
 
 </Project>
