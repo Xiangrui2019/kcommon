@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using ECommon.Utilities;
 using KCommon.Core.Utilities;
+using KCommon.Core.Validations;
 
 namespace KCommon.Core.Extensions
 {
@@ -10,17 +11,30 @@ namespace KCommon.Core.Extensions
     {
         public static string ToAddress(this EndPoint endpoint)
         {
-            Ensure.NotNull(endpoint, "endpoint");
+            if (new NotNull().IsValid(endpoint))
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            
             return ((IPEndPoint)endpoint).ToAddress();
         }
+        
         public static string ToAddress(this IPEndPoint endpoint)
         {
-            Ensure.NotNull(endpoint, "endpoint");
+            if (new NotNull().IsValid(endpoint))
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            
             return string.Format("{0}:{1}", endpoint.Address, endpoint.Port);
         }
         public static IPEndPoint ToEndPoint(this string address)
         {
-            Ensure.NotNull(address, "address");
+            if (new NotNull().IsValid(address))
+            {
+                throw new ArgumentNullException(nameof(address));
+            }
+            
             var array = address.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
             if (array.Length != 2)
             {
@@ -32,7 +46,11 @@ namespace KCommon.Core.Extensions
         }
         public static IEnumerable<IPEndPoint> ToEndPoints(this string addresses)
         {
-            Ensure.NotNull(addresses, "addresses");
+            if (new NotNull().IsValid(addresses))
+            {
+                throw new ArgumentNullException(nameof(addresses));
+            }
+            
             var array = addresses.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var list = new List<IPEndPoint>();
             foreach (var item in array)

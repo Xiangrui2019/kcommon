@@ -29,7 +29,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} should not be null or empty!");
+                return new ValidationResult($"The {validationContext.DisplayName} should be positive!");
             }
         }
     }
@@ -61,7 +61,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} should not be null or empty!");
+                return new ValidationResult($"The {validationContext.DisplayName} should be positive!");
             }
         }
     }
