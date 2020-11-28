@@ -1,4 +1,5 @@
-﻿using KCommon.Core.Abstract.Components;
+﻿using System.Net.Http;
+using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Abstract.Serializing;
 using KCommon.Core.Components;
@@ -34,11 +35,12 @@ namespace KCommon.Core.Configurations
             return this;
         }
 
-        public Configuration RegisterCommonComponents()
+        public Configuration AddCommonComponents()
         {
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
             SetDefault<IBinarySerializer, DefaultBinarySerializer>();
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
+            SetDefault<HttpClient, HttpClient>();
             return this;
         }
         

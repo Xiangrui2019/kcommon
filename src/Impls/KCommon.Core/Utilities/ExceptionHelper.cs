@@ -12,6 +12,7 @@ namespace KCommon.Core.Utilities
             }
             catch (Exception)
             {
+                // ignored
             }
         }
         
