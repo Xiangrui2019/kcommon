@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using KCommon.Core.Abstract.IO;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Extensions;
-using KCommon.Core.Utilities;
 using KCommon.Core.Validations;
 
 namespace KCommon.Core.IO
@@ -21,17 +20,17 @@ namespace KCommon.Core.IO
 
         public void TryIOAction(string actionName, Func<string> getContextInfo, Action action, int maxRetryTimes, bool continueRetryWhenRetryFailed = false, int retryInterval = 1000)
         {
-            if (new NotNull().IsValid(actionName))
+            if (!new NotNull().IsValid(actionName))
             {
                 throw new ArgumentNullException(nameof(actionName));
             }
             
-            if (new NotNull().IsValid(getContextInfo))
+            if (!new NotNull().IsValid(getContextInfo))
             {
                 throw new ArgumentNullException(nameof(getContextInfo));
             }
             
-            if (new NotNull().IsValid(action))
+            if (!new NotNull().IsValid(action))
             {
                 throw new ArgumentNullException(nameof(action));
             }
@@ -40,17 +39,17 @@ namespace KCommon.Core.IO
         }
         public T TryIOFunc<T>(string funcName, Func<string> getContextInfo, Func<T> func, int maxRetryTimes, bool continueRetryWhenRetryFailed = false, int retryInterval = 1000)
         {
-            if (new NotNull().IsValid(funcName))
+            if (!new NotNull().IsValid(funcName))
             {
                 throw new ArgumentNullException(nameof(funcName));
             }
             
-            if (new NotNull().IsValid(getContextInfo))
+            if (!new NotNull().IsValid(getContextInfo))
             {
                 throw new ArgumentNullException(nameof(getContextInfo));
             }
             
-            if (new NotNull().IsValid(func))
+            if (!new NotNull().IsValid(func))
             {
                 throw new ArgumentNullException(nameof(func));
             }
@@ -342,12 +341,12 @@ namespace KCommon.Core.IO
 
         public void TryIOAction(Action action, string actionName)
         {
-            if (new NotNull().IsValid(action))
+            if (!new NotNull().IsValid(action))
             {
                 throw new ArgumentNullException(nameof(action));
             }
             
-            if (new NotNull().IsValid(actionName))
+            if (!new NotNull().IsValid(actionName))
             {
                 throw new ArgumentNullException(nameof(actionName));
             }
@@ -367,12 +366,12 @@ namespace KCommon.Core.IO
         }
         public async Task TryIOActionAsync(Func<Task> action, string actionName)
         {
-            if (new NotNull().IsValid(action))
+            if (!new NotNull().IsValid(action))
             {
                 throw new ArgumentNullException(nameof(action));
             }
             
-            if (new NotNull().IsValid(actionName))
+            if (!new NotNull().IsValid(actionName))
             {
                 throw new ArgumentNullException(nameof(actionName));
             }
@@ -392,12 +391,12 @@ namespace KCommon.Core.IO
         }
         public T TryIOFunc<T>(Func<T> func, string funcName)
         {
-            if (new NotNull().IsValid(func))
+            if (!new NotNull().IsValid(func))
             {
                 throw new ArgumentNullException(nameof(func));
             }
             
-            if (new NotNull().IsValid(funcName))
+            if (!new NotNull().IsValid(funcName))
             {
                 throw new ArgumentNullException(nameof(funcName));
             }
@@ -417,12 +416,12 @@ namespace KCommon.Core.IO
         }
         public async Task<T> TryIOFuncAsync<T>(Func<Task<T>> func, string funcName)
         {
-            if (new NotNull().IsValid(func))
+            if (!new NotNull().IsValid(func))
             {
                 throw new ArgumentNullException(nameof(func));
             }
             
-            if (new NotNull().IsValid(funcName))
+            if (!new NotNull().IsValid(funcName))
             {
                 throw new ArgumentNullException(nameof(funcName));
             }

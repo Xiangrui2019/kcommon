@@ -12,7 +12,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static void AddIf<T>(this ICollection<T> collection, T value, bool flag)
         {
-            if (new NotNull().IsValid(collection))
+            if (!new NotNull().IsValid(collection))
             {
                 throw new ArgumentNullException(nameof(collection));
             }
@@ -28,7 +28,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static void AddIf<T>(this ICollection<T> collection, T value, Func<bool> func)
         {
-            if (new NotNull().IsValid(collection))
+            if (!new NotNull().IsValid(collection))
             {
                 throw new ArgumentNullException(nameof(collection));
             }
@@ -44,7 +44,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static void AddIfNotExist<T>(this ICollection<T> collection, T value, Func<T, bool> existFunc = null)
         {
-            if (new NotNull().IsValid(collection))
+            if (!new NotNull().IsValid(collection))
             {
                 throw new ArgumentNullException(nameof(collection));
             }
@@ -61,7 +61,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static void AddIfNotNull<T>(this ICollection<T> collection, T value) where T : class
         {
-            if (new NotNull().IsValid(collection))
+            if (!new NotNull().IsValid(collection))
             {
                 throw new ArgumentNullException(nameof(collection));
             }
@@ -77,7 +77,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static T GetOrAdd<T>(this ICollection<T> collection, Func<T, bool> selector, Func<T> factory)
         {
-            if (new NotNull().IsValid(collection))
+            if (!new NotNull().IsValid(collection))
             {
                 throw new ArgumentNullException(nameof(collection));
             }

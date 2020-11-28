@@ -11,7 +11,7 @@ namespace KCommon.Core.Extensions
     {
         public static string ToAddress(this EndPoint endpoint)
         {
-            if (new NotNull().IsValid(endpoint))
+            if (!new NotNull().IsValid(endpoint))
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
@@ -21,7 +21,7 @@ namespace KCommon.Core.Extensions
         
         public static string ToAddress(this IPEndPoint endpoint)
         {
-            if (new NotNull().IsValid(endpoint))
+            if (!new NotNull().IsValid(endpoint))
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
@@ -30,7 +30,7 @@ namespace KCommon.Core.Extensions
         }
         public static IPEndPoint ToEndPoint(this string address)
         {
-            if (new NotNull().IsValid(address))
+            if (!new NotNull().IsValid(address))
             {
                 throw new ArgumentNullException(nameof(address));
             }
@@ -46,7 +46,7 @@ namespace KCommon.Core.Extensions
         }
         public static IEnumerable<IPEndPoint> ToEndPoints(this string addresses)
         {
-            if (new NotNull().IsValid(addresses))
+            if (!new NotNull().IsValid(addresses))
             {
                 throw new ArgumentNullException(nameof(addresses));
             }
