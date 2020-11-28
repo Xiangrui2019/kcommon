@@ -1,7 +1,9 @@
 ﻿using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Logging;
+using KCommon.Core.Abstract.Serializing;
 using KCommon.Core.Components;
 using KCommon.Core.Logging;
+using KCommon.Core.Serializing;
 
 namespace KCommon.Core.Configurations
 {
@@ -35,6 +37,8 @@ namespace KCommon.Core.Configurations
         public Configuration RegisterCommonComponents()
         {
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
+            SetDefault<IBinarySerializer, DefaultBinarySerializer>();
+            SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             return this;
         }
         
