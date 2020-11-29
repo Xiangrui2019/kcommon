@@ -5,29 +5,27 @@ namespace KCommon.Core.Abstract.Http
     public interface IHttpService
     {
         // Get请求
-        string Get<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<string> GetAsync<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        TResponseData GetToJson<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<TResponseData> GetToJsonAsync<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
+        string Get(string url, bool forceHttp = false);
+        Task<string> GetAsync(string url, bool forceHttp = false);
+        T GetJson<T>(string url, bool forceHttp = false) where T : class;
+        Task<T> GetJsonAsync<T>(string url, bool forceHttp = false) where T : class;
         
         // Post请求
-        string Post<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<string> PostAsync<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        TResponseData PostFormToJson<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<TResponseData> PostFormToJsonAsync<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        TResponseData PostJsonToJson<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<TResponseData> PostJsonToJsonAsync<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
+        string Post(string url, object data, bool forceHttp = false);
+        Task<string> PostAsync(string url, object data, bool forceHttp = false);
+        T PostJson<T>(string url, object data, bool forceHttp = false) where T : class;
+        Task<T> PostJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class;
 
         // Put请求
-        string Put<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<string> PutAsync<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        TResponseData PutJsonToJson<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<TResponseData> PutJsonToJsonAsync<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        
+        string Put(string url, object data, bool forceHttp = false);
+        Task<string> PutAsync(string url, object data, bool forceHttp = false);
+        T PutJson<T>(string url, object data, bool forceHttp = false) where T : class;
+        Task<T> PutJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class;
+
         // Delete请求
-        string Delete<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<string> DeleteAsync<TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        TResponseData DeleteJsonToJson<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
-        Task<TResponseData> DeleteJsonToJsonAsync<TResponseData, TRequestData>(string url, TRequestData data, bool forceHttp = false);
+        string Delete(string url, object data, bool forceHttp = false);
+        Task<string> DeleteAsync(string url, object data, bool forceHttp = false);
+        T DeleteJson<T>(string url, object data, bool forceHttp = false) where T : class;
+        Task<T> DeleteJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class;
     }
 }
