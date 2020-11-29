@@ -54,6 +54,7 @@ namespace KCommon.Core.Configurations
                     }
                 }
             };
+
             return this;
         }
 
@@ -64,6 +65,11 @@ namespace KCommon.Core.Configurations
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             SetDefault<ICacheService, EmptyCacheService>();
             SetDefault<IHttpService, EmptyHttpService>();
+            return this;
+        }
+
+        public Configuration AddScannedComponents()
+        {
             return this;
         }
         

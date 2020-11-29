@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCommon.Web", "src\Impls\KC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCommon.Core.FunctionalTests", "tests\FunctionalTests\KCommon.Core.FunctionalTests\KCommon.Core.FunctionalTests.csproj", "{5411AFD8-DF4C-4786-8A74-3BCB3667F493}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCommon.Core.Serilog", "src\Impls\KCommon.Core.Serilog\KCommon.Core.Serilog.csproj", "{787A3904-70FC-4662-AB40-563F56BC40DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +181,18 @@ Global
 		{5411AFD8-DF4C-4786-8A74-3BCB3667F493}.Release|x64.Build.0 = Release|Any CPU
 		{5411AFD8-DF4C-4786-8A74-3BCB3667F493}.Release|x86.ActiveCfg = Release|Any CPU
 		{5411AFD8-DF4C-4786-8A74-3BCB3667F493}.Release|x86.Build.0 = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|x64.Build.0 = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Debug|x86.Build.0 = Debug|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|x64.ActiveCfg = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|x64.Build.0 = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|x86.ActiveCfg = Release|Any CPU
+		{787A3904-70FC-4662-AB40-563F56BC40DF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +213,7 @@ Global
 		{24ADA075-55D3-4677-9A10-96E506949C6F} = {0EC05028-A8CF-463C-AE7C-2B5FB08DBEFA}
 		{11235C9D-B889-4BAA-B8E9-9E75E5074003} = {0EC05028-A8CF-463C-AE7C-2B5FB08DBEFA}
 		{5411AFD8-DF4C-4786-8A74-3BCB3667F493} = {D75FC6C9-3706-43CB-AFD9-BAB7F16F57C9}
+		{787A3904-70FC-4662-AB40-563F56BC40DF} = {0EC05028-A8CF-463C-AE7C-2B5FB08DBEFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDDCC7B1-3555-4399-BB6F-54D809CEA73E}
