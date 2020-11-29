@@ -92,6 +92,25 @@ namespace KCommon.Core.Extensions
             return item;
         }
 
+        public static IEnumerable<T> AddWith<T>(this IEnumerable<T> input, T toAdd)
+        {
+            var list = input.ToList();
+            list.Add(toAdd);
+            return list;
+        }
+
+        public static IEnumerable<T> Filter<T>(this IEnumerable<T> dbSet, bool enabled, Func<T, bool> predicate) where T : class
+        {
+            if (enabled)
+            {
+                return dbSet.Where(predicate);
+            }
+            else
+            {
+                return dbSet;
+            }
+        }
+
         /// <summary>
         /// 判断集合是否为null或空集合
         /// </summary>
