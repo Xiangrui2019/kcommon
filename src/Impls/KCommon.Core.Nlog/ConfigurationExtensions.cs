@@ -5,7 +5,7 @@ namespace KCommon.Core.Nlog
 {
     public static class ConfigurationExtensions
     {
-        /// <summary>Use Log4Net as the logger.
+        /// <summary>Use NLog as the logger.
         /// </summary>
         /// <returns></returns>
         public static Configuration UseNlog(this Configuration configuration)
