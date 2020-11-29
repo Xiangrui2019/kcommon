@@ -45,8 +45,7 @@ namespace KCommon.Core.Configurations
             SetDefault<IBinarySerializer, EmptyBinarySerializer>();
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             SetDefault<ICacheService, EmptyCacheService>();
-            SetDefault<HttpClient, HttpClient>();
-            SetDefault<IHttpService, HttpService>();
+            SetDefault<IHttpService, EmptyHttpService>();
             return this;
         }
         

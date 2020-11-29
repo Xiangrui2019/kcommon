@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Serializing;
 
-namespace KCommon.Core.Http
+namespace KCommon.Core.BasicHttp
 {
     public class HttpService : IHttpService
     {
