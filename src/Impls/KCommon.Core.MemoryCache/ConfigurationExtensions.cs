@@ -1,5 +1,5 @@
-﻿using KCommon.Core.Configurations;
-using System.Runtime.Caching;
+﻿using KCommon.Core.Abstract.Cache;
+using KCommon.Core.Configurations;
 
 namespace KCommon.Core.MemoryCache
 {
@@ -16,6 +16,8 @@ namespace KCommon.Core.MemoryCache
                 Microsoft.Extensions.Caching.Memory.MemoryCache>(
                 new Microsoft.Extensions.Caching.Memory.MemoryCache(
                     new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions()));
+
+            configuration.SetDefault<ICacheService, InMemoryCacheService>();
 
             return configuration;
         }

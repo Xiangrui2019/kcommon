@@ -42,6 +42,7 @@ namespace KCommon.Core.MemoryCache
 
                 _cache.Set(cacheKey, resultValue, cacheEntryOptions);
             }
+
             return resultValue;
         }
 
