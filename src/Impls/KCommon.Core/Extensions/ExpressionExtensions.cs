@@ -18,17 +18,17 @@ namespace KCommon.Core.Extensions
         /// <returns>组合后的表达式</returns>
         public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
-            if (new NotNull().IsValid(first))
+            if (!new NotNull().IsValid(first))
             {
                 throw new ArgumentNullException(nameof(first));
             }
             
-            if (new NotNull().IsValid(second))
+            if (!new NotNull().IsValid(second))
             {
                 throw new ArgumentNullException(nameof(second));
             }
             
-            if (new NotNull().IsValid(second))
+            if (!new NotNull().IsValid(second))
             {
                 throw new ArgumentNullException(nameof(second));
             }
@@ -49,12 +49,12 @@ namespace KCommon.Core.Extensions
         /// <returns>组合后的表达式</returns>
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second, bool ifExp = true)
         {
-            if (new NotNull().IsValid(first))
+            if (!new NotNull().IsValid(first))
             {
                 throw new ArgumentNullException(nameof(first));
             }
             
-            if (new NotNull().IsValid(second))
+            if (!new NotNull().IsValid(second))
             {
                 throw new ArgumentNullException(nameof(second));
             }
@@ -72,12 +72,12 @@ namespace KCommon.Core.Extensions
         /// <returns>组合后的表达式</returns>
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second, bool ifExp = true)
         {
-            if (new NotNull().IsValid(first))
+            if (!new NotNull().IsValid(first))
             {
                 throw new ArgumentNullException(nameof(first));
             }
             
-            if (new NotNull().IsValid(second))
+            if (!new NotNull().IsValid(second))
             {
                 throw new ArgumentNullException(nameof(second));
             }

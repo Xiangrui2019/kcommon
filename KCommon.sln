@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 17.00
-# Visual Studio 17
-VisualStudioVersion = 17.0.26124.0
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CB6C9D03-DCD9-4C80-B897-F88BEFBF3720}"
 EndProject
@@ -81,3 +81,4 @@ Global
 		{0917129B-5CC2-4635-BDE4-801C8885EB99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
+
