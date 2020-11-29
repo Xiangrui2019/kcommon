@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using KCommon.Core.Abstract.Cache;
 using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Http;
@@ -36,6 +37,23 @@ namespace KCommon.Core.Configurations
             where TImplementer : class, TService
         {
             ObjectContainer.RegisterInstance<TService, TImplementer>(instance, serviceName);
+            return this;
+        }
+
+        public Configuration RegisterUnhandledExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                var loggerFactory = ObjectContainer.Resolve<ILoggerFactory>();
+                if (loggerFactory != null)
+                {
+                    var logger = loggerFactory.Create(GetType().FullName);
+                    if (logger != null)
+                    {
+                        logger.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
+                    }
+                }
+            };
             return this;
         }
 
