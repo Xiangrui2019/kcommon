@@ -33,10 +33,32 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
 
             Assert.AreEqual(service.Tes(), 10);
         }
+        
+        [TestMethod]
+        public void TestInterfaceReslove()
+        {
+            var service = ObjectContainer.Resolve<ITestInterface>();
+
+            Assert.AreEqual(service.Tes(), 10);
+        }
     }
 
     [Component]
     public class Test
+    {
+        public int Tes()
+        {
+            return 10;
+        }
+    }
+    
+    public interface ITestInterface
+    {
+        int Tes();
+    }
+    
+    [Component]
+    public class TestInterface : ITestInterface
     {
         public int Tes()
         {
