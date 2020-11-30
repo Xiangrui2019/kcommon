@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using KCommon.Core.Abstract.Cache;
 using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Http;
@@ -10,6 +13,7 @@ using KCommon.Core.Components;
 using KCommon.Core.Http;
 using KCommon.Core.Logging;
 using KCommon.Core.Serializing;
+using KCommon.Core.Utilities;
 
 namespace KCommon.Core.Configurations
 {
@@ -68,8 +72,20 @@ namespace KCommon.Core.Configurations
             return this;
         }
 
-        public Configuration AddScannedComponents()
+        public Configuration RegisterScannedComponents(params Assembly[] assemblies)
         {
+            var registeredTypes = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                foreach (var type in assembly.GetTypes().Where(TypeUtils.IsComponent))
+                {
+                    if (!registeredTypes.Contains(type))
+                    {
+                        RegisterComponentType(type);
+                    }
+                }
+            }
+
             return this;
         }
         
@@ -77,6 +93,28 @@ namespace KCommon.Core.Configurations
         {
             ObjectContainer.Build();
             return this;
+        }
+
+        private void RegisterComponentType(Type type)
+        {
+            var life = ParseComponentLifeStyle(type);
+            ObjectContainer.RegisterType(type, null, life);
+
+            foreach (var interfaceType in type.GetInterfaces())
+            {
+                ObjectContainer.RegisterType(interfaceType, type, null, life);
+            }
+        }
+
+        private LifeStyle ParseComponentLifeStyle(Type type)
+        {
+            var attributes = type.GetCustomAttributes<ComponentAttribute>(false);
+            if (attributes != null && attributes.Any())
+            {
+                return attributes.First().LifeStyle;
+            }
+
+            return LifeStyle.Singleton;
         }
     }
 }

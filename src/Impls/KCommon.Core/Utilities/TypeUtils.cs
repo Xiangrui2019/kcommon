@@ -1,5 +1,7 @@
-﻿using System;
+﻿using KCommon.Core.Abstract.Components;
+using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace KCommon.Core.Utilities
 {
@@ -29,6 +31,13 @@ namespace KCommon.Core.Utilities
             }
 
             return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        /// <summary>Check whether a type is a component type.
+        /// </summary>
+        public static bool IsComponent(Type type)
+        {
+            return type.IsClass && !type.IsAbstract && type.GetCustomAttributes(typeof(ComponentAttribute), false).Any();
         }
     }
 }
