@@ -51,6 +51,8 @@ namespace KCommon.Core.Configurations
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {
                 var loggerFactory = ObjectContainer.Resolve<ILoggerFactory>();
+                var exceptionReporter = ObjectContainer.Resolve<IExceptionReporter>();
+
                 if (loggerFactory != null)
                 {
                     var logger = loggerFactory.Create(GetType().FullName);
@@ -58,6 +60,12 @@ namespace KCommon.Core.Configurations
                     {
                         logger.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
                     }
+                }
+
+                if (exceptionReporter != null)
+                {
+                    ExceptionHelper.EatException(
+                        () => exceptionReporter.ReportAsync((Exception) e.ExceptionObject).GetAwaiter().GetResult());
                 }
             };
 
