@@ -16,7 +16,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
             Configuration
                 .Create()
                 .UseAutofac()
-                .AddCommonComponents()
+                .RegisterCommonComponents()
                 .UseJsonNet()
                 .BuildContainer();
         }

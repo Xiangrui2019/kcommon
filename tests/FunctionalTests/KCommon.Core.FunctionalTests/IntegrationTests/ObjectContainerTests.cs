@@ -14,7 +14,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
             Configuration
                .Create()
                .UseAutofac()
-               .AddCommonComponents()
+               .RegisterCommonComponents()
                .SetDefault<TestService, TestService>()
                .BuildContainer();
 

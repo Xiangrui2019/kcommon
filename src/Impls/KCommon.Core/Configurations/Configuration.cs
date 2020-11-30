@@ -58,7 +58,7 @@ namespace KCommon.Core.Configurations
             return this;
         }
 
-        public Configuration AddCommonComponents()
+        public Configuration RegisterCommonComponents()
         {
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
             SetDefault<IBinarySerializer, EmptyBinarySerializer>();
