@@ -32,6 +32,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
             var service = ObjectContainer.Resolve<Test>();
 
             Assert.AreEqual(service.Tes(), 10);
+            Assert.AreEqual(service.Tes2(), 10);
         }
         
         [TestMethod]
@@ -46,9 +47,21 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
     [Component]
     public class Test
     {
+        private readonly ITestInterface _i; 
+
+        public Test(ITestInterface i)
+        {
+            _i = i;
+        }
+
         public int Tes()
         {
             return 10;
+        }
+
+        public int Tes2()
+        {
+            return _i.Tes();
         }
     }
     
