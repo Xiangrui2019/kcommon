@@ -30,14 +30,14 @@ namespace KCommon.MicroServices.Configurations
 
         public Configuration GetCommonConfiguration()
         {
-            _configuration.SetDefault<IServiceRegisterService, EmptyServiceRegisterService>();
-            _configuration.SetDefault<IServiceResloverService, EmptyServiceResloverService>();
-
-            return _configuration;
+           return _configuration;
         }
 
         public MicroServicesConfiguration RegisterMicroServicesComponents()
         {
+            _configuration.SetDefault<IServiceRegisterService, EmptyServiceRegisterService>();
+            _configuration.SetDefault<IServiceResloverService, EmptyServiceResloverService>();
+
             return this;
         }
     }
