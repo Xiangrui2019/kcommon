@@ -5,7 +5,6 @@ namespace KCommon.MicrosSrvices.Abstract.ServiceDiscovery
 {
     public interface IServiceRegisterService
     {
-        Task RegisterAutoServiceAsync();
-        Task RegisterServiceAsync(Service service);
+        Task StartRegisterServiceAsync();
     }
 }

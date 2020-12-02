@@ -1,5 +1,7 @@
 ﻿using KCommon.Core.Configurations;
 using KCommon.Core.Validations;
+using KCommon.MicroServices.ServiceDiscovery;
+using KCommon.MicrosSrvices.Abstract.ServiceDiscovery;
 using System;
 
 namespace KCommon.MicroServices.Configurations
@@ -20,7 +22,7 @@ namespace KCommon.MicroServices.Configurations
             _configuration = configuration;
         }
 
-        public static MicroServicesConfiguration CreateMicroServices(Configuration configuration, ConfigurationSetting setting)
+        public static MicroServicesConfiguration CreateMicroServices(Configuration configuration)
         {
             Instance = new MicroServicesConfiguration(configuration);
             return Instance;
@@ -28,6 +30,9 @@ namespace KCommon.MicroServices.Configurations
 
         public Configuration GetCommonConfiguration()
         {
+            _configuration.SetDefault<IServiceRegisterService, EmptyServiceRegisterService>();
+            _configuration.SetDefault<IServiceResloverService, EmptyServiceResloverService>();
+
             return _configuration;
         }
 
