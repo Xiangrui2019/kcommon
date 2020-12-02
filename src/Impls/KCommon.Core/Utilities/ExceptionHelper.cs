@@ -53,27 +53,27 @@ namespace KCommon.Core.Utilities
             }
         }
 
-        public static Tuple<T, Exception> CatchException<T>(Func<T> action, T defaultValue = default(T))
+        public static (T, Exception) CatchException<T>(Func<T> action, T defaultValue = default(T))
         {
             try
             {
-                return new Tuple<T, Exception>(action(), null);
+                return (action(), null);
             }
             catch (Exception e)
             {
-                return new Tuple<T, Exception>(defaultValue, e);
+                return (defaultValue, e);
             }
         }
 
-        public static async Task<Tuple<T, Exception>> CatchExceptionAsync<T>(Func<Task<T>> action, T defaultValue = default(T))
+        public static async Task<(T, Exception)> CatchExceptionAsync<T>(Func<Task<T>> action, T defaultValue = default(T))
         {
             try
             {
-                return new Tuple<T, Exception>(await action(), null);
+                return (await action(), null);
             }
             catch (Exception e)
             {
-                return new Tuple<T, Exception>(defaultValue, e);
+                return (defaultValue, e);
             }
         }
     }
