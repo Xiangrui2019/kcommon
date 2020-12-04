@@ -50,5 +50,22 @@ namespace KCommon.Core.MemoryCache
         {
             _cache.Remove(key);
         }
+
+        public Task SetAsync<T>(string cacheKey, T value, int cachedMinutes)
+        {
+            var cacheEntryOptions = new MemoryCacheEntryOptions();
+
+            if (cachedMinutes == default(int) || cachedMinutes == 0)
+            {
+                cacheEntryOptions
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(cachedMinutes));
+            }
+
+            _cache.Set<T>(cacheKey, value, cacheEntryOptions);
+            return Task.CompletedTask;
+        }
+
+        public Task<T> GetAsync<T>(string cacheKey)
+            => Task.FromResult(_cache.Get<T>(cacheKey));
     }
 }
