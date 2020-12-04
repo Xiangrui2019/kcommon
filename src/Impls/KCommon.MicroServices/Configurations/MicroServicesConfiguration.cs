@@ -1,6 +1,8 @@
 ﻿using KCommon.Core.Configurations;
 using KCommon.Core.Validations;
+using KCommon.MicroServices.LoadBalance;
 using KCommon.MicroServices.ServiceDiscovery;
+using KCommon.MicrosSrvices.Abstract.LoadBalance;
 using KCommon.MicrosSrvices.Abstract.ServiceDiscovery;
 using System;
 
@@ -37,6 +39,7 @@ namespace KCommon.MicroServices.Configurations
         {
             _configuration.SetDefault<IServiceRegisterService, EmptyServiceRegisterService>();
             _configuration.SetDefault<IServiceResloverService, EmptyServiceResloverService>();
+            _configuration.SetDefault<ILoadBalancer, EmptyLoadBalancer>();
 
             return this;
         }
