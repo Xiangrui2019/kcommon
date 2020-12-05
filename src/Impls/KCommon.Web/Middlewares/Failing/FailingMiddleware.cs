@@ -4,9 +4,7 @@ using KCommon.Web.ErrorCode;
 using KCommon.Web.Models.Message;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KCommon.Web.Middlewares.Failing
@@ -43,9 +41,11 @@ namespace KCommon.Web.Middlewares.Failing
             if (MustFail(context))
             {
                 _logger.Info($"Response for path {path} will fail.");
-                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync("Failed due to FailingMiddleware enabled.");
+                await SendNoResponse(context, new MessageModel
+                {
+                    Code = ErrorType.Breaker,
+                    Message = "对不起, 服务器无法处理您的请求.",
+                });
             }
             else
             {
@@ -96,7 +96,15 @@ namespace KCommon.Web.Middlewares.Failing
         private async Task SendOkResponse(HttpContext context, MessageModel message)
         {
             context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-            context.Response.ContentType = "text/plain";
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(
+                _jsonSerializer.Serialize(message));
+        }
+
+        private async Task SendNoResponse(HttpContext context, MessageModel message)
+        {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+            context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(
                 _jsonSerializer.Serialize(message));
         }
