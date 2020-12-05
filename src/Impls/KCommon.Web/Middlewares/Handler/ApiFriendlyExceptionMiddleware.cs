@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Web.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -14,12 +15,12 @@ namespace KCommon.Web.Middlewares.Handler
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
         public ApiFriendlyExceptionMiddleware(
             RequestDelegate next,
-            ILoggerFactory loggerFactory, 
-            IHostingEnvironment environment)
+            ILoggerFactory loggerFactory,
+            IWebHostEnvironment environment)
         {
             _next = next;
             _logger = loggerFactory.Create(GetType().FullName);
