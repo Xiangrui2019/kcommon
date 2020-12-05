@@ -19,12 +19,12 @@ namespace KCommon.Core.Cache
             throw new NotImplementedException();
         }
 
-        public Task<T> GetAndCache<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
+        public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> GetAndCacheAsync<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
+        public Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
             throw new NotImplementedException();
         }
