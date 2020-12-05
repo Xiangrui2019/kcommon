@@ -26,7 +26,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} is not a valid GUID value!");
+                return new ValidationResult($"{validationContext.DisplayName} 不是一个GUID的值!");
             }
         }
     }

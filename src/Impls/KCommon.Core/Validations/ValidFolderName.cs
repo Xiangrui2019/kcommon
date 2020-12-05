@@ -30,7 +30,7 @@ namespace KCommon.Core.Validations
                         invalidCharacters += $" '{invalidChar}',";
                     }
                 }
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain invalid characters{invalidCharacters.TrimEnd(',')}!");
+                return new ValidationResult($"{validationContext.DisplayName} 不能包含错误的字符 {invalidCharacters.TrimEnd(',')}!");
             }
         }
     }

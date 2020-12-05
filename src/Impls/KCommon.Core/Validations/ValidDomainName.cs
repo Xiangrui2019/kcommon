@@ -25,7 +25,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can only contain numbers, alphabet and underline.");
+                return new ValidationResult($"{validationContext.DisplayName} 只能包含 字母下划线和数字.");
             }
         }
     }

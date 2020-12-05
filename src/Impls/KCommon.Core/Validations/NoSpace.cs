@@ -21,7 +21,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain space!");
+                return new ValidationResult($"{validationContext.DisplayName} 不能包含空格符号!");
             }
         }
     }

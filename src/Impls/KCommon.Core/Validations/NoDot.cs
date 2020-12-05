@@ -21,7 +21,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} can not contain dot!");
+                return new ValidationResult($"{validationContext.DisplayName} 不能包括点!");
             }
         }
     }

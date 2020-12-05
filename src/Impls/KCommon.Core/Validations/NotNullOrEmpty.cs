@@ -24,7 +24,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} should not be null or empty!");
+                return new ValidationResult($"{validationContext.DisplayName} 不能为Null或者空!");
             }
         }
     }

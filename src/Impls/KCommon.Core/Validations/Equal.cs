@@ -23,7 +23,7 @@ namespace KCommon.Core.Validations
             }
             else
             {
-                return new ValidationResult($"The {validationContext.DisplayName} isn't same as {Excepted.GetType()}!");
+                return new ValidationResult($"{validationContext.DisplayName} 与 {Excepted.GetType()} 不相等!");
             }
         }
     }
