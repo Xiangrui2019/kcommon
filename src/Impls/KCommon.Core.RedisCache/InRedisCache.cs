@@ -13,7 +13,6 @@ namespace KCommon.Core.RedisCache
     public class InRedisCache : ICache
     {
         private readonly IDatabase _cache;
-        private readonly IJsonSerializer _jsonSerializer;
 
         public InRedisCache(ConnectionMultiplexer factory)
         {
