@@ -12,6 +12,14 @@ namespace KCommon.MicroServices.Abstract.ServiceDiscovery.Models
             IsHealthy = isHealthy;
         }
 
+        public Endpoint(Uri uri)
+        {
+            Url = uri;
+            Host = Url.Host;
+            Port = Url.Port;
+            IsHealthy = true;
+        }
+
         public Uri Url { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
