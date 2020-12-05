@@ -53,6 +53,20 @@ namespace KCommon.MicroServices.Configurations
             return this;
         }
 
+        public MicroServicesConfiguration UseConfServiceEndpoint()
+        {
+            _configuration.SetDefault<IServiceEndpoints, ConfigurationServiceEndpoints>();
+
+            return this;
+        }
+
+        public MicroServicesConfiguration UseServiceEndpoint<T>() where T : class, IServiceEndpoints
+        {
+            _configuration.SetDefault<IServiceEndpoints, T>();
+
+            return this;
+        }
+
         public MicroServicesConfiguration StartServiceRegister()
         {
             var service = ObjectContainer.Resolve<IServiceRegisterService>();
