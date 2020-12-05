@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Abstracts\KCommon.Web.Abstract\KCommon.Web.Abstract.csproj" />
-    <ProjectReference Include="..\KCommon.Core\KCommon.Core.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
+    <ProjectReference Include="..\..\Abstracts\KCommon.Web.Abstract\KCommon.Web.Abstract.csproj" />
+    <ProjectReference Include="..\KCommon.Core\KCommon.Core.csproj" />
   </ItemGroup>
 
 </Project>
