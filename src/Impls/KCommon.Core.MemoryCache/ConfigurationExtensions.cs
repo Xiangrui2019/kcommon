@@ -15,7 +15,6 @@ namespace KCommon.Core.MemoryCache
         /// <returns></returns>
         public static Configuration UseInMemoryCache(this Configuration configuration)
         {
-
             configuration.SetDefault<
                 Microsoft.Extensions.Caching.Memory.IMemoryCache,
                 Microsoft.Extensions.Caching.Memory.MemoryCache>(
