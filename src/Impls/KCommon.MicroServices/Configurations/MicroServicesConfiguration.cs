@@ -46,6 +46,14 @@ namespace KCommon.MicroServices.Configurations
             return this;
         }
 
+        public MicroServicesConfiguration StartServiceRegister()
+        {
+            var service = ObjectContainer.Resolve<IServiceRegisterService>();
+            service.StartAsync().GetAwaiter().GetResult();
+
+            return this;
+        }
+
         public MicroServicesConfiguration UseK8sServiceEndpoint()
         {
             _configuration.SetDefault<IServiceEndpoints, K8sServiceEndpoints>();
@@ -63,14 +71,6 @@ namespace KCommon.MicroServices.Configurations
         public MicroServicesConfiguration UseServiceEndpoint<T>() where T : class, IServiceEndpoints
         {
             _configuration.SetDefault<IServiceEndpoints, T>();
-
-            return this;
-        }
-
-        public MicroServicesConfiguration StartServiceRegister()
-        {
-            var service = ObjectContainer.Resolve<IServiceRegisterService>();
-            service.StartAsync().GetAwaiter().GetResult();
 
             return this;
         }
