@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using KCommon.Core.Abstract.Cache;
 using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Abstract.Serializing;
+using KCommon.Core.Cache;
 using KCommon.Core.Components;
 using KCommon.Core.Http;
 using KCommon.Core.Logging;
@@ -65,6 +67,7 @@ namespace KCommon.Core.Configurations
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
             SetDefault<IBinarySerializer, EmptyBinarySerializer>();
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
+            SetDefault<ICache, EmptyCache>();
             SetDefault<IHttpService, EmptyHttpService>();
             return this;
         }
