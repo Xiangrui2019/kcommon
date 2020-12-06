@@ -1,5 +1,4 @@
-﻿using KCommon.Core.Components;
-using KCommon.Core.Configurations;
+﻿using KCommon.Core.Configurations;
 using KCommon.Core.Validations;
 using System;
 
