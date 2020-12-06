@@ -60,7 +60,7 @@ namespace KCommon.Core.MemoryCache
 
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
-            if (!(cacheKey, out T resultValue) || resultValue == null)
+            if (!await TryGetAsync(cacheKey, out T resultValue) || resultValue == null)
             {
                 resultValue = await backup();
 

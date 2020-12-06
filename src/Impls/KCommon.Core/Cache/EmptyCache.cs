@@ -9,7 +9,7 @@ namespace KCommon.Core.Cache
 {
     public class EmptyCache : ICache
     {
-        public Task<T> TryGetAsync<T>(string cacheKey)
+        public Task<bool> TryGetAsync<T>(string cacheKey, out T result)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace KCommon.Core.Cache
             throw new NotImplementedException();
         }
 
-        public T TryGet<T>(string cacheKey)
+        public bool TryGet<T>(string cacheKey, out T result)
         {
             throw new NotImplementedException();
         }

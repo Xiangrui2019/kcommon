@@ -13,8 +13,8 @@ namespace KCommon.Core.Abstract.Cache
         Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20);
         T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20);
 
-        T TryGet<T>(string cacheKey);
-        Task<T> TryGetAsync<T>(string cacheKey);
+        bool TryGet<T>(string cacheKey, out T result);
+        Task<bool> TryGetAsync<T>(string cacheKey, out T result);
 
         void Clear(string cacheKey);
     }
