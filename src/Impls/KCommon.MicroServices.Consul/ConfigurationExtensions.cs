@@ -1,6 +1,7 @@
 ﻿using Consul;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Configurations;
+using KCommon.MicroServices.Abstract.ServiceDiscovery;
 using System;
 
 namespace KCommon.MicroServices.Consul
@@ -14,6 +15,13 @@ namespace KCommon.MicroServices.Consul
         {
             var client = new ConsulClient(options);
             configuration.SetDefault<ConsulClient, ConsulClient>(client);
+
+            configuration.SetDefault<
+                IServiceResloverService,
+                ConsulServiceResloverService>();
+            configuration.SetDefault<
+                IServiceRegisterService,
+                ConsulServiceRegisterService>();
 
             return configuration;
         }

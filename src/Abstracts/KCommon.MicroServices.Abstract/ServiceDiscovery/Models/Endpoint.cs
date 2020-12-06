@@ -22,9 +22,9 @@ namespace KCommon.MicroServices.Abstract.ServiceDiscovery.Models
 
         public Endpoint(string host, int port, bool isHealthy)
         {
-            Host = host;
-            Port = port;
             Url = new Uri($"http://{host}:{port}/");
+            Host = Url.Host;
+            Port = Url.Port;
             IsHealthy = isHealthy;
         }
 
