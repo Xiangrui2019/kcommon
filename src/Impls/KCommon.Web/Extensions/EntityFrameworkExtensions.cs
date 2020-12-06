@@ -12,14 +12,12 @@ namespace KCommon.Web.Extensions
         private static IEnumerable<M> DistinctBySync<T, M>(this IEnumerable<M> query) where M : ISyncable<T>
         {
             var knownKeys = new HashSet<M>();
-            foreach (M element in query)
-            {
+            foreach (var element in query)
                 if (!knownKeys.Any(k => k.EqualsInDb(element.Map())))
                 {
                     knownKeys.Add(element);
                     yield return element;
                 }
-            }
         }
 
         public static void Delete<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
@@ -54,17 +52,12 @@ namespace KCommon.Web.Extensions
                     .Count();
 
                 if (itemCount > itemCountShallBe)
-                {
                     dbSet.RemoveRange(items.Skip(itemCountShallBe));
-                }
                 else if (itemCount < itemCountShallBe)
-                {
-                    for (int i = 0; i < itemCountShallBe - itemCount; i++)
-                    {
+                    for (var i = 0; i < itemCountShallBe - itemCount; i++)
                         dbSet.Add(item.Map());
-                    }
-                }
             }
+
             var toDelete = dbSet
                 .Where(filter)
                 .AsEnumerable()

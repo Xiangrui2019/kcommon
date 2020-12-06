@@ -28,10 +28,7 @@ namespace KCommon.Core.RedisCache
         {
             var result = _cache.StringGet(cacheKey);
 
-            if (result == "")
-            {
-                return default(T);
-            }
+            if (result == "") return default(T);
 
             return JsonConvert.DeserializeObject<T>(result);
         }
@@ -40,10 +37,7 @@ namespace KCommon.Core.RedisCache
         {
             var result = await _cache.StringGetAsync(cacheKey);
 
-            if (result == "")
-            {
-                return default(T);
-            }
+            if (result == "") return default(T);
 
             return JsonConvert.DeserializeObject<T>(result);
         }

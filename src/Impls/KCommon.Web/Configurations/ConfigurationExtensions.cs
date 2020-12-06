@@ -10,7 +10,7 @@ namespace KCommon.Web.Configurations
 {
     public static class ConfigurationExtensions
     {
-        public static Configuration RegisterFailingComponents(Configuration configuration, 
+        public static Configuration RegisterFailingComponents(Configuration configuration,
             Func<FailingOptions> options)
         {
             configuration.SetDefault<FailingOptions, FailingOptions>(options());

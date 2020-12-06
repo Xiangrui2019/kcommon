@@ -17,12 +17,9 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static string GetFileVersion(this Assembly assembly)
         {
-            if (!new NotNull().IsValid(assembly))
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+            if (!new NotNull().IsValid(assembly)) throw new ArgumentNullException(nameof(assembly));
 
-            FileVersionInfo info = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var info = FileVersionInfo.GetVersionInfo(assembly.Location);
             return info.FileVersion;
         }
 
@@ -31,12 +28,9 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static string GetProductVersion(this Assembly assembly)
         {
-            if (!new NotNull().IsValid(assembly))
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+            if (!new NotNull().IsValid(assembly)) throw new ArgumentNullException(nameof(assembly));
 
-            FileVersionInfo info = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var info = FileVersionInfo.GetVersionInfo(assembly.Location);
             return info.ProductVersion;
         }
 
@@ -54,15 +48,13 @@ namespace KCommon.Core.Extensions
                 "Microsoft.Extensions.Configuration.Abstractions"
             };
             CompilationLibrary lib = null;
-            foreach (string dllName in dllNames)
+            foreach (var dllName in dllNames)
             {
                 lib = DependencyContext.Default.CompileLibraries.FirstOrDefault(m => m.Name == dllName);
-                if (lib != null)
-                {
-                    break;
-                }
+                if (lib != null) break;
             }
-            string cliVersion = lib?.Version;
+
+            var cliVersion = lib?.Version;
             return cliVersion;
         }
     }

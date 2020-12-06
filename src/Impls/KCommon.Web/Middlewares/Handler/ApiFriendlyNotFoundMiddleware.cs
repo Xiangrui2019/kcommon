@@ -37,7 +37,7 @@ namespace KCommon.Web.Middlewares.Handler
                     Code = ErrorType.NotFound,
                     Message = "对不起, 我们找不到这个资源"
                 });
-                
+
                 await context.Response.WriteAsync(message, Encoding.UTF8);
             }
         }

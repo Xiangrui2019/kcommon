@@ -15,6 +15,7 @@ namespace KCommon.Core.Autofac
         /// <summary>Represents the iner autofac container builder.
         /// </summary>
         public ContainerBuilder ContainerBuilder { get; }
+
         /// <summary>Represents the inner autofac container.
         /// </summary>
         public IContainer Container { get; set; }
@@ -24,12 +25,14 @@ namespace KCommon.Core.Autofac
         public AutofacObjectContainer() : this(new ContainerBuilder())
         {
         }
+
         /// <summary>Parameterized constructor.
         /// </summary>
         public AutofacObjectContainer(ContainerBuilder containerBuilder)
         {
             ContainerBuilder = containerBuilder;
         }
+
         /// <summary>Parameterized constructor.
         /// </summary>
         public AutofacObjectContainer(IContainer container)
@@ -43,71 +46,52 @@ namespace KCommon.Core.Autofac
         {
             Container = ContainerBuilder.Build();
         }
+
         /// <summary>Register a implementation type.
         /// </summary>
         /// <param name="implementationType">The implementation type.</param>
         /// <param name="serviceName">The service name.</param>
         /// <param name="life">The life cycle of the implementer type.</param>
-        public void RegisterType(Type implementationType, string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+        public void RegisterType(Type implementationType, string serviceName = null,
+            LifeStyle life = LifeStyle.Singleton)
         {
             if (implementationType.IsGenericType)
             {
                 var registrationBuilder = ContainerBuilder.RegisterGeneric(implementationType);
-                if (serviceName != null)
-                {
-                    registrationBuilder.Named(serviceName, implementationType);
-                }
-                if (life == LifeStyle.Singleton)
-                {
-                    registrationBuilder.SingleInstance();
-                }
+                if (serviceName != null) registrationBuilder.Named(serviceName, implementationType);
+                if (life == LifeStyle.Singleton) registrationBuilder.SingleInstance();
             }
             else
             {
                 var registrationBuilder = ContainerBuilder.RegisterType(implementationType);
-                if (serviceName != null)
-                {
-                    registrationBuilder.Named(serviceName, implementationType);
-                }
-                if (life == LifeStyle.Singleton)
-                {
-                    registrationBuilder.SingleInstance();
-                }
+                if (serviceName != null) registrationBuilder.Named(serviceName, implementationType);
+                if (life == LifeStyle.Singleton) registrationBuilder.SingleInstance();
             }
         }
+
         /// <summary>Register a implementer type as a service implementation.
         /// </summary>
         /// <param name="serviceType">The service type.</param>
         /// <param name="implementationType">The implementation type.</param>
         /// <param name="serviceName">The service name.</param>
         /// <param name="life">The life cycle of the implementer type.</param>
-        public void RegisterType(Type serviceType, Type implementationType, string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+        public void RegisterType(Type serviceType, Type implementationType, string serviceName = null,
+            LifeStyle life = LifeStyle.Singleton)
         {
             if (implementationType.IsGenericType)
             {
                 var registrationBuilder = ContainerBuilder.RegisterGeneric(implementationType).As(serviceType);
-                if (serviceName != null)
-                {
-                    registrationBuilder.Named(serviceName, implementationType);
-                }
-                if (life == LifeStyle.Singleton)
-                {
-                    registrationBuilder.SingleInstance();
-                }
+                if (serviceName != null) registrationBuilder.Named(serviceName, implementationType);
+                if (life == LifeStyle.Singleton) registrationBuilder.SingleInstance();
             }
             else
             {
                 var registrationBuilder = ContainerBuilder.RegisterType(implementationType).As(serviceType);
-                if (serviceName != null)
-                {
-                    registrationBuilder.Named(serviceName, serviceType);
-                }
-                if (life == LifeStyle.Singleton)
-                {
-                    registrationBuilder.SingleInstance();
-                }
+                if (serviceName != null) registrationBuilder.Named(serviceName, serviceType);
+                if (life == LifeStyle.Singleton) registrationBuilder.SingleInstance();
             }
         }
+
         /// <summary>Register a implementer type as a service implementation.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -119,15 +103,10 @@ namespace KCommon.Core.Autofac
             where TImplementer : class, TService
         {
             var registrationBuilder = ContainerBuilder.RegisterType<TImplementer>().As<TService>();
-            if (serviceName != null)
-            {
-                registrationBuilder.Named<TService>(serviceName);
-            }
-            if (life == LifeStyle.Singleton)
-            {
-                registrationBuilder.SingleInstance();
-            }
+            if (serviceName != null) registrationBuilder.Named<TService>(serviceName);
+            if (life == LifeStyle.Singleton) registrationBuilder.SingleInstance();
         }
+
         /// <summary>Register a implementer type instance as a service implementation.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -139,11 +118,9 @@ namespace KCommon.Core.Autofac
             where TImplementer : class, TService
         {
             var registrationBuilder = ContainerBuilder.RegisterInstance(instance).As<TService>().SingleInstance();
-            if (serviceName != null)
-            {
-                registrationBuilder.Named<TService>(serviceName);
-            }
+            if (serviceName != null) registrationBuilder.Named<TService>(serviceName);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -152,6 +129,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.Resolve<TService>();
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <param name="serviceType">The service type.</param>
@@ -160,6 +138,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.Resolve(serviceType);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <typeparam name="TService">The service type to resolve.</typeparam>
@@ -169,6 +148,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.TryResolve(out instance);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <param name="serviceType">The service type to resolve.</param>
@@ -178,6 +158,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.TryResolve(serviceType, out instance);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -187,6 +168,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.ResolveNamed<TService>(serviceName);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <param name="serviceName">The service name.</param>
@@ -196,6 +178,7 @@ namespace KCommon.Core.Autofac
         {
             return Container.ResolveNamed(serviceName, serviceType);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <param name="serviceName">The name of the service to resolve.</param>

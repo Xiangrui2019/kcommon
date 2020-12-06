@@ -16,7 +16,7 @@ namespace KCommon.Core.Extensions
             {
                 throw new ArgumentNullException(nameof(collection));
             }
-            
+
             if (flag)
             {
                 collection.Add(value);
@@ -32,7 +32,7 @@ namespace KCommon.Core.Extensions
             {
                 throw new ArgumentNullException(nameof(collection));
             }
-            
+
             if (func())
             {
                 collection.Add(value);
@@ -48,8 +48,8 @@ namespace KCommon.Core.Extensions
             {
                 throw new ArgumentNullException(nameof(collection));
             }
-            
-            bool exists = existFunc == null ? collection.Contains(value) : existFunc(value);
+
+            var exists = existFunc == null ? collection.Contains(value) : existFunc(value);
             if (!exists)
             {
                 collection.Add(value);
@@ -65,7 +65,7 @@ namespace KCommon.Core.Extensions
             {
                 throw new ArgumentNullException(nameof(collection));
             }
-            
+
             if (value != null)
             {
                 collection.Add(value);
@@ -81,8 +81,8 @@ namespace KCommon.Core.Extensions
             {
                 throw new ArgumentNullException(nameof(collection));
             }
-            
-            T item = collection.FirstOrDefault(selector);
+
+            var item = collection.FirstOrDefault(selector);
             if (item == null)
             {
                 item = factory();
@@ -99,7 +99,8 @@ namespace KCommon.Core.Extensions
             return list;
         }
 
-        public static IEnumerable<T> Filter<T>(this IEnumerable<T> dbSet, bool enabled, Func<T, bool> predicate) where T : class
+        public static IEnumerable<T> Filter<T>(this IEnumerable<T> dbSet, bool enabled, Func<T, bool> predicate)
+            where T : class
         {
             if (enabled)
             {

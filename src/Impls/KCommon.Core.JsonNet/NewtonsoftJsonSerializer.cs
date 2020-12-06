@@ -19,7 +19,7 @@ namespace KCommon.Core.JsonNet
         {
             Settings = new JsonSerializerSettings
             {
-                Converters = new List<JsonConverter> { new IsoDateTimeConverter() },
+                Converters = new List<JsonConverter> {new IsoDateTimeConverter()},
                 ContractResolver = new CustomContractResolver(),
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             };
@@ -33,6 +33,7 @@ namespace KCommon.Core.JsonNet
         {
             return obj == null ? null : JsonConvert.SerializeObject(obj, Settings);
         }
+
         /// <summary>Deserialize a json string to an object.
         /// </summary>
         /// <param name="value"></param>
@@ -42,6 +43,7 @@ namespace KCommon.Core.JsonNet
         {
             return JsonConvert.DeserializeObject(value, type, Settings);
         }
+
         /// <summary>Deserialize a json string to a strong type object.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -52,7 +54,7 @@ namespace KCommon.Core.JsonNet
             return JsonConvert.DeserializeObject<T>(JObject.Parse(value).ToString(), Settings);
         }
 
-        class CustomContractResolver : DefaultContractResolver
+        private class CustomContractResolver : DefaultContractResolver
         {
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {

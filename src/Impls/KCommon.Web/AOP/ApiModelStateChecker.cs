@@ -15,7 +15,7 @@ namespace KCommon.Web.AOP
                 context.Result = new JsonResult(
                     ReusltGenerator.GetInvalidModelStateErrorResponse(
                         context.ModelState)
-                    );
+                );
             }
 
             base.OnActionExecuting(context);

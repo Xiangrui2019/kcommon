@@ -9,11 +9,9 @@ namespace KCommon.Core.Extensions
     {
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
-            foreach (var element in enumerable)
-            {
-                action(element);
-            }
+            foreach (var element in enumerable) action(element);
         }
+
         public static IEnumerable<T> Safe<T>(this IEnumerable<T> collection)
         {
             return collection ?? Enumerable.Empty<T>();

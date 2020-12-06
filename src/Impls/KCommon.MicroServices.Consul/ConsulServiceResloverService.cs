@@ -31,10 +31,8 @@ namespace KCommon.MicroServices.Consul
             var service = new Service(moduleName, serviceName);
 
             foreach (var serviceEntry in serviceEntries)
-            {
                 service.AddServiceEndpoints(
                     new Endpoint(serviceEntry.Service.Address, serviceEntry.Service.Port, true));
-            }
 
             return service;
         }

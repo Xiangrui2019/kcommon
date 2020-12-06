@@ -21,10 +21,11 @@ namespace ECommon.Utilities
         private static int __staticMachine;
         private static short __staticPid;
         private static int __staticIncrement; // high byte will be masked out when generating new ObjectId
+
         private static uint[] _lookup32 = Enumerable.Range(0, 256).Select(i =>
         {
-            string s = i.ToString("x2");
-            return ((uint)s[0]) + ((uint)s[1] << 16);
+            var s = i.ToString("x2");
+            return (uint) s[0] + ((uint) s[1] << 16);
         }).ToArray();
 
         // we're using 14 bytes instead of 12 to hold the ObjectId in memory but unlike a byte[] there is no additional object on the heap
@@ -42,8 +43,8 @@ namespace ECommon.Utilities
             __dateTimeMaxValueMillisecondsSinceEpoch = (DateTime.MaxValue - __unixEpoch).Ticks / 10000;
             __dateTimeMinValueMillisecondsSinceEpoch = (DateTime.MinValue - __unixEpoch).Ticks / 10000;
             __staticMachine = GetMachineHash();
-            __staticIncrement = (new Random()).Next();
-            __staticPid = (short)GetCurrentProcessId();
+            __staticIncrement = new Random().Next();
+            __staticPid = (short) GetCurrentProcessId();
         }
 
         // constructors
@@ -53,10 +54,7 @@ namespace ECommon.Utilities
         /// <param name="bytes">The bytes.</param>
         public ObjectId(byte[] bytes)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
+            if (bytes == null) throw new ArgumentNullException("bytes");
             Unpack(bytes, out _timestamp, out _machine, out _pid, out _increment);
         }
 
@@ -82,13 +80,11 @@ namespace ECommon.Utilities
         public ObjectId(int timestamp, int machine, short pid, int increment)
         {
             if ((machine & 0xff000000) != 0)
-            {
-                throw new ArgumentOutOfRangeException("machine", "The machine value must be between 0 and 16777215 (it must fit in 3 bytes).");
-            }
+                throw new ArgumentOutOfRangeException("machine",
+                    "The machine value must be between 0 and 16777215 (it must fit in 3 bytes).");
             if ((increment & 0xff000000) != 0)
-            {
-                throw new ArgumentOutOfRangeException("increment", "The increment value must be between 0 and 16777215 (it must fit in 3 bytes).");
-            }
+                throw new ArgumentOutOfRangeException("increment",
+                    "The increment value must be between 0 and 16777215 (it must fit in 3 bytes).");
 
             _timestamp = timestamp;
             _machine = machine;
@@ -102,10 +98,7 @@ namespace ECommon.Utilities
         /// <param name="value">The value.</param>
         public ObjectId(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            if (value == null) throw new ArgumentNullException("value");
             Unpack(ParseHexString(value), out _timestamp, out _machine, out _pid, out _increment);
         }
 
@@ -113,51 +106,33 @@ namespace ECommon.Utilities
         /// <summary>
         /// Gets an instance of ObjectId where the value is empty.
         /// </summary>
-        public static ObjectId Empty
-        {
-            get { return __emptyInstance; }
-        }
+        public static ObjectId Empty => __emptyInstance;
 
         // public properties
         /// <summary>
         /// Gets the timestamp.
         /// </summary>
-        public int Timestamp
-        {
-            get { return _timestamp; }
-        }
+        public int Timestamp => _timestamp;
 
         /// <summary>
         /// Gets the machine.
         /// </summary>
-        public int Machine
-        {
-            get { return _machine; }
-        }
+        public int Machine => _machine;
 
         /// <summary>
         /// Gets the PID.
         /// </summary>
-        public short Pid
-        {
-            get { return _pid; }
-        }
+        public short Pid => _pid;
 
         /// <summary>
         /// Gets the increment.
         /// </summary>
-        public int Increment
-        {
-            get { return _increment; }
-        }
+        public int Increment => _increment;
 
         /// <summary>
         /// Gets the creation time (derived from the timestamp).
         /// </summary>
-        public DateTime CreationTime
-        {
-            get { return __unixEpoch.AddSeconds(_timestamp); }
-        }
+        public DateTime CreationTime => __unixEpoch.AddSeconds(_timestamp);
 
         // public operators
         /// <summary>
@@ -253,7 +228,7 @@ namespace ECommon.Utilities
         /// <returns>An ObjectId.</returns>
         public static ObjectId GenerateNewId(int timestamp)
         {
-            int increment = Interlocked.Increment(ref __staticIncrement) & 0x00ffffff; // only use low order 3 bytes
+            var increment = Interlocked.Increment(ref __staticIncrement) & 0x00ffffff; // only use low order 3 bytes
             return new ObjectId(timestamp, __staticMachine, __staticPid, increment);
         }
 
@@ -277,27 +252,25 @@ namespace ECommon.Utilities
         public static byte[] Pack(int timestamp, int machine, short pid, int increment)
         {
             if ((machine & 0xff000000) != 0)
-            {
-                throw new ArgumentOutOfRangeException("machine", "The machine value must be between 0 and 16777215 (it must fit in 3 bytes).");
-            }
+                throw new ArgumentOutOfRangeException("machine",
+                    "The machine value must be between 0 and 16777215 (it must fit in 3 bytes).");
             if ((increment & 0xff000000) != 0)
-            {
-                throw new ArgumentOutOfRangeException("increment", "The increment value must be between 0 and 16777215 (it must fit in 3 bytes).");
-            }
+                throw new ArgumentOutOfRangeException("increment",
+                    "The increment value must be between 0 and 16777215 (it must fit in 3 bytes).");
 
-            byte[] bytes = new byte[12];
-            bytes[0] = (byte)(timestamp >> 24);
-            bytes[1] = (byte)(timestamp >> 16);
-            bytes[2] = (byte)(timestamp >> 8);
-            bytes[3] = (byte)(timestamp);
-            bytes[4] = (byte)(machine >> 16);
-            bytes[5] = (byte)(machine >> 8);
-            bytes[6] = (byte)(machine);
-            bytes[7] = (byte)(pid >> 8);
-            bytes[8] = (byte)(pid);
-            bytes[9] = (byte)(increment >> 16);
-            bytes[10] = (byte)(increment >> 8);
-            bytes[11] = (byte)(increment);
+            var bytes = new byte[12];
+            bytes[0] = (byte) (timestamp >> 24);
+            bytes[1] = (byte) (timestamp >> 16);
+            bytes[2] = (byte) (timestamp >> 8);
+            bytes[3] = (byte) timestamp;
+            bytes[4] = (byte) (machine >> 16);
+            bytes[5] = (byte) (machine >> 8);
+            bytes[6] = (byte) machine;
+            bytes[7] = (byte) (pid >> 8);
+            bytes[8] = (byte) pid;
+            bytes[9] = (byte) (increment >> 16);
+            bytes[10] = (byte) (increment >> 8);
+            bytes[11] = (byte) increment;
             return bytes;
         }
 
@@ -308,14 +281,9 @@ namespace ECommon.Utilities
         /// <returns>A ObjectId.</returns>
         public static ObjectId Parse(string s)
         {
-            if (s == null)
-            {
-                throw new ArgumentNullException("s");
-            }
+            if (s == null) throw new ArgumentNullException("s");
             if (s.Length != 24)
-            {
                 throw new ArgumentOutOfRangeException("s", "ObjectId string value must be 24 characters.");
-            }
             return new ObjectId(ParseHexString(s));
         }
 
@@ -329,17 +297,11 @@ namespace ECommon.Utilities
         /// <param name="increment">The increment.</param>
         public static void Unpack(byte[] bytes, out int timestamp, out int machine, out short pid, out int increment)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
-            if (bytes.Length != 12)
-            {
-                throw new ArgumentOutOfRangeException("bytes", "Byte array must be 12 bytes long.");
-            }
+            if (bytes == null) throw new ArgumentNullException("bytes");
+            if (bytes.Length != 12) throw new ArgumentOutOfRangeException("bytes", "Byte array must be 12 bytes long.");
             timestamp = (bytes[0] << 24) + (bytes[1] << 16) + (bytes[2] << 8) + bytes[3];
             machine = (bytes[4] << 16) + (bytes[5] << 8) + bytes[6];
-            pid = (short)((bytes[7] << 8) + bytes[8]);
+            pid = (short) ((bytes[7] << 8) + bytes[8]);
             increment = (bytes[9] << 16) + (bytes[10] << 8) + bytes[11];
         }
 
@@ -365,7 +327,7 @@ namespace ECommon.Utilities
 
         private static int GetTimestampFromDateTime(DateTime timestamp)
         {
-            return (int)Math.Floor((ToUniversalTime(timestamp) - __unixEpoch).TotalSeconds);
+            return (int) Math.Floor((ToUniversalTime(timestamp) - __unixEpoch).TotalSeconds);
         }
 
         // public methods
@@ -376,12 +338,12 @@ namespace ECommon.Utilities
         /// <returns>A 32-bit signed integer that indicates whether this ObjectId is less than, equal to, or greather than the other.</returns>
         public int CompareTo(ObjectId other)
         {
-            int r = _timestamp.CompareTo(other._timestamp);
-            if (r != 0) { return r; }
+            var r = _timestamp.CompareTo(other._timestamp);
+            if (r != 0) return r;
             r = _machine.CompareTo(other._machine);
-            if (r != 0) { return r; }
+            if (r != 0) return r;
             r = _pid.CompareTo(other._pid);
-            if (r != 0) { return r; }
+            if (r != 0) return r;
             return _increment.CompareTo(other._increment);
         }
 
@@ -407,13 +369,9 @@ namespace ECommon.Utilities
         public override bool Equals(object obj)
         {
             if (obj is ObjectId)
-            {
-                return Equals((ObjectId)obj);
-            }
+                return Equals((ObjectId) obj);
             else
-            {
                 return false;
-            }
         }
 
         /// <summary>
@@ -422,7 +380,7 @@ namespace ECommon.Utilities
         /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
-            int hash = 17;
+            var hash = 17;
             hash = 37 * hash + _timestamp.GetHashCode();
             hash = 37 * hash + _machine.GetHashCode();
             hash = 37 * hash + _pid.GetHashCode();
@@ -455,25 +413,18 @@ namespace ECommon.Utilities
         /// <returns>The byte equivalent of the hex string.</returns>
         public static byte[] ParseHexString(string s)
         {
-            if (s == null)
-            {
-                throw new ArgumentNullException("s");
-            }
+            if (s == null) throw new ArgumentNullException("s");
 
-            if (s.Length % 2 == 1)
-            {
-                throw new Exception("The binary key cannot have an odd number of digits");
-            }
+            if (s.Length % 2 == 1) throw new Exception("The binary key cannot have an odd number of digits");
 
-            byte[] arr = new byte[s.Length >> 1];
+            var arr = new byte[s.Length >> 1];
 
-            for (int i = 0; i < s.Length >> 1; ++i)
-            {
-                arr[i] = (byte)((GetHexVal(s[i << 1]) << 4) + (GetHexVal(s[(i << 1) + 1])));
-            }
+            for (var i = 0; i < s.Length >> 1; ++i)
+                arr[i] = (byte) ((GetHexVal(s[i << 1]) << 4) + GetHexVal(s[(i << 1) + 1]));
 
             return arr;
         }
+
         /// <summary>
         /// Converts a byte array to a hex string.
         /// </summary>
@@ -481,19 +432,18 @@ namespace ECommon.Utilities
         /// <returns>A hex string.</returns>
         public static string ToHexString(byte[] bytes)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
+            if (bytes == null) throw new ArgumentNullException("bytes");
             var result = new char[bytes.Length * 2];
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
                 var val = _lookup32[bytes[i]];
-                result[2 * i] = (char)val;
-                result[2 * i + 1] = (char)(val >> 16);
+                result[2 * i] = (char) val;
+                result[2 * i + 1] = (char) (val >> 16);
             }
+
             return new string(result);
         }
+
         /// <summary>
         /// Converts a DateTime to number of milliseconds since Unix epoch.
         /// </summary>
@@ -504,6 +454,7 @@ namespace ECommon.Utilities
             var utcDateTime = ToUniversalTime(dateTime);
             return (utcDateTime - __unixEpoch).Ticks / 10000;
         }
+
         /// <summary>
         /// Converts a DateTime to UTC (with special handling for MinValue and MaxValue).
         /// </summary>
@@ -512,28 +463,22 @@ namespace ECommon.Utilities
         public static DateTime ToUniversalTime(DateTime dateTime)
         {
             if (dateTime == DateTime.MinValue)
-            {
                 return DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
-            }
             else if (dateTime == DateTime.MaxValue)
-            {
                 return DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc);
-            }
             else
-            {
                 return dateTime.ToUniversalTime();
-            }
         }
 
         private static int GetHexVal(char hex)
         {
-            int val = (int)hex;
+            var val = (int) hex;
             //For uppercase A-F letters:
             //return val - (val < 58 ? 48 : 55);
             //For lowercase a-f letters:
             //return val - (val < 58 ? 48 : 87);
             //Or the two combined, but a bit slower:
-            return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
+            return val - (val < 58 ? 48 : val < 97 ? 55 : 87);
         }
     }
 }

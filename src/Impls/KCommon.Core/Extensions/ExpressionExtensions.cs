@@ -8,7 +8,7 @@ namespace KCommon.Core.Extensions
 {
     public static class ExpressionExtensions
     {
-         /// <summary>
+        /// <summary>
         /// 以特定的条件运行组合两个Expression表达式
         /// </summary>
         /// <typeparam name="T">表达式的主实体类型</typeparam>
@@ -16,26 +16,18 @@ namespace KCommon.Core.Extensions
         /// <param name="second">要组合的Expression表达式</param>
         /// <param name="merge">组合条件运算方式</param>
         /// <returns>组合后的表达式</returns>
-        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second,
+            Func<Expression, Expression, Expression> merge)
         {
-            if (!new NotNull().IsValid(first))
-            {
-                throw new ArgumentNullException(nameof(first));
-            }
-            
-            if (!new NotNull().IsValid(second))
-            {
-                throw new ArgumentNullException(nameof(second));
-            }
-            
-            if (!new NotNull().IsValid(second))
-            {
-                throw new ArgumentNullException(nameof(second));
-            }
-            
-            Dictionary<ParameterExpression, ParameterExpression> map =
-                first.Parameters.Select((f, i) => new { f, s = second.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
-            Expression secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
+            if (!new NotNull().IsValid(first)) throw new ArgumentNullException(nameof(first));
+
+            if (!new NotNull().IsValid(second)) throw new ArgumentNullException(nameof(second));
+
+            if (!new NotNull().IsValid(second)) throw new ArgumentNullException(nameof(second));
+
+            var map =
+                first.Parameters.Select((f, i) => new {f, s = second.Parameters[i]}).ToDictionary(p => p.s, p => p.f);
+            var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
 
@@ -47,18 +39,13 @@ namespace KCommon.Core.Extensions
         /// <param name="second">要组合的Expression表达式</param>
         /// <param name="ifExp">判断条件表达式，当此条件为true时，才执行组合</param>
         /// <returns>组合后的表达式</returns>
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second, bool ifExp = true)
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first,
+            Expression<Func<T, bool>> second, bool ifExp = true)
         {
-            if (!new NotNull().IsValid(first))
-            {
-                throw new ArgumentNullException(nameof(first));
-            }
-            
-            if (!new NotNull().IsValid(second))
-            {
-                throw new ArgumentNullException(nameof(second));
-            }
-            
+            if (!new NotNull().IsValid(first)) throw new ArgumentNullException(nameof(first));
+
+            if (!new NotNull().IsValid(second)) throw new ArgumentNullException(nameof(second));
+
             return ifExp ? first.Compose(second, Expression.AndAlso) : first;
         }
 
@@ -70,21 +57,16 @@ namespace KCommon.Core.Extensions
         /// <param name="second">要组合的Expression表达式</param>
         /// <param name="ifExp">判断条件表达式，当此条件为true时，才执行组合</param>
         /// <returns>组合后的表达式</returns>
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second, bool ifExp = true)
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first,
+            Expression<Func<T, bool>> second, bool ifExp = true)
         {
-            if (!new NotNull().IsValid(first))
-            {
-                throw new ArgumentNullException(nameof(first));
-            }
-            
-            if (!new NotNull().IsValid(second))
-            {
-                throw new ArgumentNullException(nameof(second));
-            }
-            
+            if (!new NotNull().IsValid(first)) throw new ArgumentNullException(nameof(first));
+
+            if (!new NotNull().IsValid(second)) throw new ArgumentNullException(nameof(second));
+
             return ifExp ? first.Compose(second, Expression.OrElse) : first;
         }
-        
+
 
         private class ParameterRebinder : ExpressionVisitor
         {
@@ -95,7 +77,8 @@ namespace KCommon.Core.Extensions
                 _map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
             }
 
-            public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression exp)
+            public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map,
+                Expression exp)
             {
                 return new ParameterRebinder(map).Visit(exp);
             }
@@ -103,10 +86,7 @@ namespace KCommon.Core.Extensions
             protected override Expression VisitParameter(ParameterExpression node)
             {
                 ParameterExpression replacement;
-                if (_map.TryGetValue(node, out replacement))
-                {
-                    node = replacement;
-                }
+                if (_map.TryGetValue(node, out replacement)) node = replacement;
                 return base.VisitParameter(node);
             }
         }

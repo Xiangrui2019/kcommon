@@ -65,7 +65,8 @@ namespace KCommon.Core.Utilities
             }
         }
 
-        public static async Task<(T, Exception)> CatchExceptionAsync<T>(Func<Task<T>> action, T defaultValue = default(T))
+        public static async Task<(T, Exception)> CatchExceptionAsync<T>(Func<Task<T>> action,
+            T defaultValue = default(T))
         {
             try
             {

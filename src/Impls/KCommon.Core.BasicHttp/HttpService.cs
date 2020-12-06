@@ -19,7 +19,9 @@ namespace KCommon.Core.BasicHttp
         }
 
         public string Get(string url, bool forceHttp = false)
-            => GetAsync(url, forceHttp).GetAwaiter().GetResult();
+        {
+            return GetAsync(url, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<string> GetAsync(string url, bool forceHttp = false)
         {
@@ -33,17 +35,16 @@ namespace KCommon.Core.BasicHttp
 
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
-            {
                 return await response.Content.ReadAsStringAsync();
-            }
             else
-            {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
-            }
+                throw new WebException(
+                    $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
         }
 
         public T GetJson<T>(string url, bool forceHttp = false) where T : class
-            => GetJsonAsync<T>(url, forceHttp).GetAwaiter().GetResult();
+        {
+            return GetJsonAsync<T>(url, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<T> GetJsonAsync<T>(string url, bool forceHttp = false) where T : class
         {
@@ -53,7 +54,9 @@ namespace KCommon.Core.BasicHttp
         }
 
         public string Post(string url, object data, bool forceHttp = false)
-            => PostAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return PostAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<string> PostAsync(string url, object data, bool forceHttp = false)
         {
@@ -68,17 +71,16 @@ namespace KCommon.Core.BasicHttp
 
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
-            {
                 return await response.Content.ReadAsStringAsync();
-            }
             else
-            {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
-            }
+                throw new WebException(
+                    $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
         }
 
         public T PostJson<T>(string url, object data, bool forceHttp = false) where T : class
-            => PostJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return PostJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<T> PostJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class
         {
@@ -88,7 +90,9 @@ namespace KCommon.Core.BasicHttp
         }
 
         public string Put(string url, object data, bool forceHttp = false)
-            => PutAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return PutAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<string> PutAsync(string url, object data, bool forceHttp = false)
         {
@@ -103,17 +107,16 @@ namespace KCommon.Core.BasicHttp
 
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
-            {
                 return await response.Content.ReadAsStringAsync();
-            }
             else
-            {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
-            }
+                throw new WebException(
+                    $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
         }
 
         public T PutJson<T>(string url, object data, bool forceHttp = false) where T : class
-           => PutJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return PutJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<T> PutJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class
         {
@@ -123,7 +126,9 @@ namespace KCommon.Core.BasicHttp
         }
 
         public string Delete(string url, object data, bool forceHttp = false)
-            => DeleteAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return DeleteAsync(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<string> DeleteAsync(string url, object data, bool forceHttp = false)
         {
@@ -138,17 +143,16 @@ namespace KCommon.Core.BasicHttp
 
             using var response = await _client.SendAsync(request);
             if (response.IsSuccessStatusCode)
-            {
                 return await response.Content.ReadAsStringAsync();
-            }
             else
-            {
-                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
-            }
+                throw new WebException(
+                    $"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
         }
 
         public T DeleteJson<T>(string url, object data, bool forceHttp = false) where T : class
-           => DeleteJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        {
+            return DeleteJsonAsync<T>(url, data, forceHttp).GetAwaiter().GetResult();
+        }
 
         public async Task<T> DeleteJsonAsync<T>(string url, object data, bool forceHttp = false) where T : class
         {

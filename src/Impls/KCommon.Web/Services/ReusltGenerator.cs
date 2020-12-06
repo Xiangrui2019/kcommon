@@ -15,7 +15,7 @@ namespace KCommon.Web.Services
                 Code = ErrorType.BadRequest,
                 Message = "您的输入中有数个错误!"
             };
-            
+
             return arg;
         }
 
@@ -25,9 +25,9 @@ namespace KCommon.Web.Services
             var arg = new MessageValue<string>(isDev ? stackTrace : "")
             {
                 Code = ErrorType.UnknownError,
-                Message = $"对不起, 这个服务 {projectName} 发生了崩溃.",
+                Message = $"对不起, 这个服务 {projectName} 发生了崩溃."
             };
-            
+
             return arg;
         }
     }

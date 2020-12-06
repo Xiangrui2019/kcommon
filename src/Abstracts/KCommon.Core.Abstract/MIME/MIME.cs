@@ -30,9 +30,10 @@ namespace KCommon.Core.Abstract.MIME
             //Not to download the file, and we can process the file, let us process it.
             if (HasKey(extenstion))
             {
-                string lower = extenstion.ToLower().TrimStart('.');
+                var lower = extenstion.ToLower().TrimStart('.');
                 return MimeTypesDictionary[lower];
             }
+
             return "application/octet-stream";
         }
 
@@ -51,12 +52,12 @@ namespace KCommon.Core.Abstract.MIME
             {"jpg", "image/jpeg"},
             {"json", "application/json"},
             {"js", "application/x-javascript"},
-            {"map","text/plain"},
+            {"map", "text/plain"},
             {"m4a", "audio/mp4a-latm"},
             {"mid", "audio/midi"},
             {"mov", "video/quicktime"},
             {"mp3", "audio/mpeg"},
-            {"webm","video/webm"},
+            {"webm", "video/webm"},
             {"mp4", "video/mp4"},
             {"mpeg", "video/mpeg"},
             {"mpg", "video/mpeg"},
@@ -71,12 +72,12 @@ namespace KCommon.Core.Abstract.MIME
             {"txt", "text/plain"},
             {"xhtml", "application/xhtml+xml"},
             {"m4u", "video/vnd.mpegurl"},
-            {"woff","application/x-font-woff"},
-            {"woff2","application/x-font-woff2"},
-            {"ttf","application/x-font-truetype"},
-            {"otf","application/x-font-opentype"},
-            {"eot","application/application/vnd.ms-fontobject"},
-            {"ts","application/x-typescript"},
+            {"woff", "application/x-font-woff"},
+            {"woff2", "application/x-font-woff2"},
+            {"ttf", "application/x-font-truetype"},
+            {"otf", "application/x-font-opentype"},
+            {"eot", "application/application/vnd.ms-fontobject"},
+            {"ts", "application/x-typescript"},
             {"xml", "text/xml"}
         };
     }

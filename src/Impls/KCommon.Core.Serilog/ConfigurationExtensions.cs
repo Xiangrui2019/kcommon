@@ -15,8 +15,10 @@ namespace KCommon.Core.Serilog
             string defaultLoggerFileName = "default",
             string defaultLoggerFileExtensions = "-.log",
             string contextPropertyName = "logger",
-            string defaultLoggerConsoleOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] - {Message:lj}{NewLine}{Exception}",
-            string defaultLoggerFileOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
+            string defaultLoggerConsoleOutputTemplate =
+                "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] - {Message:lj}{NewLine}{Exception}",
+            string defaultLoggerFileOutputTemplate =
+                "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
             bool defaultLoggerFileBuffered = true,
             long? defaultLoggerFileSizeLimitBytes = null,
             RollingInterval defaultLoggerFileRollingInterval = RollingInterval.Day,
@@ -42,6 +44,7 @@ namespace KCommon.Core.Serilog
                 consoleMinimumLevel,
                 fileMinimumLevel));
         }
+
         /// <summary>Use Serilog as the logger.
         /// </summary>
         /// <returns></returns>

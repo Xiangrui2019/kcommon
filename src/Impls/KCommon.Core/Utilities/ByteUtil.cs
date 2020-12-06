@@ -23,14 +23,17 @@ namespace KCommon.Core.Utilities
                 lengthBytes = ZeroLengthBytes;
             }
         }
+
         public static byte[] EncodeDateTime(DateTime data)
         {
             return BitConverter.GetBytes(data.Ticks);
         }
+
         public static string DecodeString(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             return Encoding.UTF8.GetString(DecodeBytes(sourceBuffer, startOffset, out nextStartOffset));
         }
+
         public static short DecodeShort(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             var shortBytes = new byte[2];
@@ -38,6 +41,7 @@ namespace KCommon.Core.Utilities
             nextStartOffset = startOffset + 2;
             return BitConverter.ToInt16(shortBytes, 0);
         }
+
         public static int DecodeInt(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             var intBytes = new byte[4];
@@ -45,6 +49,7 @@ namespace KCommon.Core.Utilities
             nextStartOffset = startOffset + 4;
             return BitConverter.ToInt32(intBytes, 0);
         }
+
         public static long DecodeLong(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             var longBytes = new byte[8];
@@ -52,6 +57,7 @@ namespace KCommon.Core.Utilities
             nextStartOffset = startOffset + 8;
             return BitConverter.ToInt64(longBytes, 0);
         }
+
         public static DateTime DecodeDateTime(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             var longBytes = new byte[8];
@@ -59,6 +65,7 @@ namespace KCommon.Core.Utilities
             nextStartOffset = startOffset + 8;
             return new DateTime(BitConverter.ToInt64(longBytes, 0));
         }
+
         public static byte[] DecodeBytes(byte[] sourceBuffer, int startOffset, out int nextStartOffset)
         {
             var lengthBytes = new byte[4];
@@ -74,26 +81,30 @@ namespace KCommon.Core.Utilities
 
             return dataBytes;
         }
+
         public static byte[] Combine(params byte[][] arrays)
         {
-            byte[] destination = new byte[arrays.Sum(x => x.Length)];
-            int offset = 0;
-            foreach (byte[] data in arrays)
+            var destination = new byte[arrays.Sum(x => x.Length)];
+            var offset = 0;
+            foreach (var data in arrays)
             {
                 Buffer.BlockCopy(data, 0, destination, offset, data.Length);
                 offset += data.Length;
             }
+
             return destination;
         }
+
         public static byte[] Combine(IEnumerable<byte[]> arrays)
         {
-            byte[] destination = new byte[arrays.Sum(x => x.Length)];
-            int offset = 0;
-            foreach (byte[] data in arrays)
+            var destination = new byte[arrays.Sum(x => x.Length)];
+            var offset = 0;
+            foreach (var data in arrays)
             {
                 Buffer.BlockCopy(data, 0, destination, offset, data.Length);
                 offset += data.Length;
             }
+
             return destination;
         }
     }

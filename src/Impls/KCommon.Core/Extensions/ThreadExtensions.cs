@@ -10,10 +10,7 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static void CancelSleep(this Thread thread)
         {
-            if (thread.ThreadState != ThreadState.WaitSleepJoin)
-            {
-                return;
-            }
+            if (thread.ThreadState != ThreadState.WaitSleepJoin) return;
             thread.Interrupt();
         }
 
@@ -29,13 +26,11 @@ namespace KCommon.Core.Extensions
                 thread.Start();
             }
             catch (ThreadAbortException)
-            { }
+            {
+            }
             catch (Exception e)
             {
-                if (failAction != null)
-                {
-                    failAction(e);
-                }
+                if (failAction != null) failAction(e);
             }
         }
     }

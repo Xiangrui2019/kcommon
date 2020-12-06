@@ -6,7 +6,9 @@ namespace KCommon.Web.Models.Message
     public class MessageCollection<T> : MessageModel
     {
         [Obsolete("This method is only for framework", true)]
-        public MessageCollection() { }
+        public MessageCollection()
+        {
+        }
 
         public MessageCollection(List<T> items)
         {

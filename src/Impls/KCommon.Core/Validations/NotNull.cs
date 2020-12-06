@@ -10,6 +10,7 @@ namespace KCommon.Core.Validations
             {
                 return false;
             }
+
             return true;
         }
 

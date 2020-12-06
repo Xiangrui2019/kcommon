@@ -16,7 +16,8 @@ namespace KCommon.Core.Utilities
         private readonly ILogger _logger;
         private int _isProcesingMessage;
 
-        public BufferQueue(string name, int requestsWriteThreshold, Action<TMessage> handleMessageAction, ILogger logger)
+        public BufferQueue(string name, int requestsWriteThreshold, Action<TMessage> handleMessageAction,
+            ILogger logger)
         {
             _name = name;
             _requestsWriteThreshold = requestsWriteThreshold;
@@ -31,31 +32,23 @@ namespace KCommon.Core.Utilities
             _inputQueue.Enqueue(message);
             TryProcessMessages();
 
-            if (_inputQueue.Count >= _requestsWriteThreshold)
-            {
-                Thread.Sleep(1);
-            }
+            if (_inputQueue.Count >= _requestsWriteThreshold) Thread.Sleep(1);
         }
 
         private void TryProcessMessages()
         {
             if (Interlocked.CompareExchange(ref _isProcesingMessage, 1, 0) == 0)
-            {
                 Task.Factory.StartNew(() =>
                 {
                     try
                     {
-                        if (_processQueue.Count == 0 && _inputQueue.Count > 0)
-                        {
-                            SwapInputQueue();
-                        }
+                        if (_processQueue.Count == 0 && _inputQueue.Count > 0) SwapInputQueue();
 
                         if (_processQueue.Count > 0)
                         {
                             var count = 0;
                             TMessage message;
                             while (_processQueue.TryDequeue(out message))
-                            {
                                 try
                                 {
                                     _handleMessageAction(message);
@@ -63,33 +56,25 @@ namespace KCommon.Core.Utilities
                                 catch (Exception ex)
                                 {
                                     var errorMessage = _name + " process message has exception.";
-                                    if (_logger != null)
-                                    {
-                                        _logger.Error(errorMessage, ex);
-                                    }
+                                    if (_logger != null) _logger.Error(errorMessage, ex);
                                 }
                                 finally
                                 {
                                     count++;
                                 }
-                            }
+
                             if (_logger.IsDebugEnabled)
-                            {
                                 _logger.DebugFormat("BufferQueue[name={0}], batch process {1} messages.", _name, count);
-                            }
                         }
                     }
                     finally
                     {
                         Interlocked.Exchange(ref _isProcesingMessage, 0);
-                        if (_inputQueue.Count > 0)
-                        {
-                            TryProcessMessages();
-                        }
+                        if (_inputQueue.Count > 0) TryProcessMessages();
                     }
-                });   
-            }   
+                });
         }
+
         private void SwapInputQueue()
         {
             var tmp = _inputQueue;

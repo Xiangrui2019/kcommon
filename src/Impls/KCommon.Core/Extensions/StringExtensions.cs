@@ -18,10 +18,7 @@ namespace KCommon.Core.Extensions
 
         public static byte[] Base64ToBytes(this string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return new byte[0];
-            }
+            if (string.IsNullOrWhiteSpace(input)) return new byte[0];
             return Convert.FromBase64String(input);
         }
 
@@ -47,8 +44,8 @@ namespace KCommon.Core.Extensions
 
         public static byte[] ToUTF8WithDom(this string content)
         {
-            byte[] encoded = new UTF8Encoding().GetBytes(content);
-            var bom = new byte[] { 0xEF, 0xBB, 0xBF };
+            var encoded = new UTF8Encoding().GetBytes(content);
+            var bom = new byte[] {0xEF, 0xBB, 0xBF};
             var all = new byte[bom.Length + encoded.Length];
             Array.Copy(bom, all, bom.Length);
             Array.Copy(encoded, 0, all, bom.Length, encoded.Length);
@@ -59,49 +56,38 @@ namespace KCommon.Core.Extensions
         {
             var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
             var sBuilder = new StringBuilder();
-            foreach (var c in data)
-            {
-                sBuilder.Append(c.ToString("x2"));
-            }
+            foreach (var c in data) sBuilder.Append(c.ToString("x2"));
             return sBuilder.ToString();
         }
 
         public static string GetMD5(this string sourceString)
         {
-            string hash = GetMd5Hash(MD5.Create(), sourceString);
+            var hash = GetMd5Hash(MD5.Create(), sourceString);
             return hash;
         }
 
         public static string GetMD5(this byte[] data)
         {
-            using MD5 md5 = MD5.Create();
+            using var md5 = MD5.Create();
             var hash = md5.ComputeHash(data);
-            string hex = BitConverter.ToString(hash);
+            var hex = BitConverter.ToString(hash);
             return hex.Replace("-", "");
         }
 
         public static string OTake(this string source, int count)
         {
             if (source.Length <= count)
-            {
                 return source;
-            }
             else
-            {
                 return source.Substring(0, count - 3) + "...";
-            }
         }
 
         public static bool IsInFollowingExtension(this string filename, params string[] extensions)
         {
             var ext = Path.GetExtension(filename);
             foreach (var extension in extensions)
-            {
                 if (ext.Trim('.').ToLower() == extension)
-                {
                     return true;
-                }
-            }
             return false;
         }
 
@@ -124,55 +110,45 @@ namespace KCommon.Core.Extensions
         {
             var s = string.Empty;
             content = WebUtility.HtmlDecode(content);
-            if (!content.Contains(">"))
-            {
-                return content;
-            }
+            if (!content.Contains(">")) return content;
             while (content.Contains(">"))
             {
                 s += content.Substring(0, content.IndexOf("<", StringComparison.Ordinal));
                 content = content.Substring(content.IndexOf(">", StringComparison.Ordinal) + 1);
             }
+
             return s + content;
         }
 
         private static Random StaticRan { get; } = new Random();
+
         public static string RandomString(int count)
         {
-            string checkCode = string.Empty;
+            var checkCode = string.Empty;
             var random = new Random(StaticRan.Next());
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var number = random.Next();
                 number %= 36;
                 if (number < 10)
-                {
                     number += 48;
-                }
                 else
-                {
                     number += 55;
-                }
-                checkCode += ((char)number).ToString();
+                checkCode += ((char) number).ToString();
             }
+
             return checkCode;
         }
 
         public static string EncodePath(this string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return string.Empty;
-            }
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
             return input.ToUrlEncoded().Replace("%2F", "/");
         }
 
         public static string ToUrlEncoded(this string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return string.Empty;
-            }
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
             return Uri.EscapeDataString(input);
         }
 
@@ -183,38 +159,28 @@ namespace KCommon.Core.Extensions
 
         public static string DetachPath(this string path)
         {
-            if (path == null || !path.Contains("/"))
-            {
-                return null;
-            }
+            if (path == null || !path.Contains("/")) return null;
             return path.Replace("/" + path.Split('/').Last(), "");
         }
 
         public static IEnumerable<string> SplitInParts(this string input, int partLength)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-            if (partLength <= 0)
-            {
-                throw new ArgumentException("Part length has to be positive.", nameof(partLength));
-            }
+            if (input == null) throw new ArgumentNullException(nameof(input));
+            if (partLength <= 0) throw new ArgumentException("Part length has to be positive.", nameof(partLength));
             for (var i = 0; i < input.Length; i += partLength)
-            {
                 yield return input.Substring(i, Math.Min(partLength, input.Length - i));
-            }
         }
 
         public static string HumanReadableSize(this long size)
         {
-            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            int order = 0;
+            string[] sizes = {"B", "KB", "MB", "GB", "TB"};
+            var order = 0;
             while (size >= 1024 && order < sizes.Length - 1)
             {
                 order++;
                 size /= 1024;
             }
+
             return $"{size:0.##} {sizes[order]}";
         }
 
@@ -225,11 +191,10 @@ namespace KCommon.Core.Extensions
 
         public static string SplitStringUpperCase(this string source)
         {
-            string[] split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
+            var split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
             var b = new StringBuilder();
-            bool first = true;
+            var first = true;
             foreach (var word in split)
-            {
                 if (first)
                 {
                     b.Append(word + " ");
@@ -239,10 +204,10 @@ namespace KCommon.Core.Extensions
                 {
                     b.Append(word.ToLower() + " ");
                 }
-            }
+
             return b.ToString();
         }
-        
+
         /// <summary>返回平台无关的Hashcode
         /// </summary>
         /// <param name="s"></param>
@@ -253,15 +218,9 @@ namespace KCommon.Core.Extensions
 
             unchecked
             {
-                int hash = 23;
-                foreach (char c in s)
-                {
-                    hash = (hash << 5) - hash + c;
-                }
-                if (hash < 0)
-                {
-                    hash = Math.Abs(hash);
-                }
+                var hash = 23;
+                foreach (var c in s) hash = (hash << 5) - hash + c;
+                if (hash < 0) hash = Math.Abs(hash);
                 return hash;
             }
         }

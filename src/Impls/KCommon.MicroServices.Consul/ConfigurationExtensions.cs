@@ -11,7 +11,8 @@ namespace KCommon.MicroServices.Consul
         /// <summary>Use Consul as ServiceDiscovery
         /// </summary>
         /// <returns></returns>
-        public static Configuration UseConsulServiceDiscovery(this Configuration configuration, Action<ConsulClientConfiguration> options)
+        public static Configuration UseConsulServiceDiscovery(this Configuration configuration,
+            Action<ConsulClientConfiguration> options)
         {
             var client = new ConsulClient(options);
             configuration.SetDefault<ConsulClient, ConsulClient>(client);

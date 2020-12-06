@@ -26,7 +26,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
         {
             var jsonSerliizer = ObjectContainer.Resolve<IJsonSerializer>();
 
-            var result = jsonSerliizer.Serialize(new TestJsonModel { A = 10, B = 20 });
+            var result = jsonSerliizer.Serialize(new TestJsonModel {A = 10, B = 20});
 
             Assert.IsNotNull(result);
             Assert.AreNotEqual(result, "");
@@ -37,7 +37,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
         {
             var jsonSerliizer = ObjectContainer.Resolve<IJsonSerializer>();
 
-            var result = jsonSerliizer.Serialize(new TestJsonModel { A = 10, B = 20 });
+            var result = jsonSerliizer.Serialize(new TestJsonModel {A = 10, B = 20});
 
             Assert.IsNotNull(result);
             Assert.AreNotEqual(result, "");

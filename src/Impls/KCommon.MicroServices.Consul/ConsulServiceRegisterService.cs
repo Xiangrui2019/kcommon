@@ -34,9 +34,8 @@ namespace KCommon.MicroServices.Consul
         {
             if (string.IsNullOrWhiteSpace(_configuration["ServiceDiscovery:ServiceName"])
                 || string.IsNullOrWhiteSpace(_configuration["ServiceDiscovery:ModuleName"]))
-            {
-                throw new ArgumentException("Service Name must be configured", _configuration["ServiceDiscoveryOptions:ServiceName"]);
-            }
+                throw new ArgumentException("Service Name must be configured",
+                    _configuration["ServiceDiscoveryOptions:ServiceName"]);
 
             var endpoints = _serviceEndpoints.GetEndpoints();
 

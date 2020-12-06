@@ -8,9 +8,13 @@ namespace KCommon.Core.Abstract.Components
         /// <summary>The lifetime of the component.
         /// </summary>
         public LifeStyle LifeStyle { get; private set; }
+
         /// <summary>Default constructor.
         /// </summary>
-        public ComponentAttribute() : this(LifeStyle.Singleton) { }
+        public ComponentAttribute() : this(LifeStyle.Singleton)
+        {
+        }
+
         /// <summary>Parameterized constructor.
         /// </summary>
         /// <param name="lifeStyle"></param>

@@ -15,9 +15,7 @@ namespace KCommon.Core.Extensions
 
             // Check for a pre-canceled token
             if (factory.CancellationToken.IsCancellationRequested)
-            {
                 return new Task(() => { }, factory.CancellationToken);
-            }
 
             // Create the timed task
             var tcs = new TaskCompletionSource<object>(factory.CreationOptions);
@@ -29,13 +27,12 @@ namespace KCommon.Core.Extensions
             {
                 // Clean up both the cancellation token and the timer, and try to transition to completed
                 ctr.Dispose();
-                ((Timer)self).Dispose();
+                ((Timer) self).Dispose();
                 tcs.TrySetResult(null);
             });
 
             // Register with the cancellation token.
             if (factory.CancellationToken.CanBeCanceled)
-            {
                 // When cancellation occurs, cancel the timer and try to transition to canceled.
                 // There could be a race, but it's benign.
                 ctr = factory.CancellationToken.Register(() =>
@@ -43,13 +40,18 @@ namespace KCommon.Core.Extensions
                     timer.Dispose();
                     tcs.TrySetCanceled();
                 });
-            }
 
             // Start the timer and hand back the task...
-            try { timer.Change(millisecondsDelay, Timeout.Infinite); }
-            catch (ObjectDisposedException) { } // in case there's a race with cancellation; this is benign
+            try
+            {
+                timer.Change(millisecondsDelay, Timeout.Infinite);
+            }
+            catch (ObjectDisposedException)
+            {
+            } // in case there's a race with cancellation; this is benign
 
-            return tcs.Task.ContinueWith(_ => action(), factory.CancellationToken, TaskContinuationOptions.OnlyOnRanToCompletion, factory.Scheduler ?? TaskScheduler.Current);
+            return tcs.Task.ContinueWith(_ => action(), factory.CancellationToken,
+                TaskContinuationOptions.OnlyOnRanToCompletion, factory.Scheduler ?? TaskScheduler.Current);
         }
     }
 }

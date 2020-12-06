@@ -17,10 +17,7 @@ namespace KCommon.MicroServices.Configurations
 
         private MicroServicesConfiguration(Configuration configuration)
         {
-            if (!new NotNull().IsValid(configuration))
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+            if (!new NotNull().IsValid(configuration)) throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
         }

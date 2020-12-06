@@ -6,11 +6,12 @@ namespace KCommon.Core.Serilog
 {
     public class SerilogLogger : Abstract.Logging.ILogger
     {
-
         private readonly object _lockObj = new object();
+
         /// <summary>Represents the context property name of the serilog logger.
         /// </summary>
         public string ContextPropertyName { get; }
+
         /// <summary>Represents the serilog logger.
         /// </summary>
         public SerilogILogger SerilogILogger { get; }
@@ -36,6 +37,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Debug(message);
         }
+
         /// <summary>Log debug message with exception.
         /// </summary>
         /// <param name="message"></param>
@@ -44,6 +46,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Debug(exception, message);
         }
+
         /// <summary>Log debug message with format and arguments.
         /// </summary>
         /// <param name="format"></param>
@@ -52,6 +55,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Debug(format, args);
         }
+
         /// <summary>Log error message.
         /// </summary>
         /// <param name="message"></param>
@@ -59,6 +63,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Error(message);
         }
+
         /// <summary>Log error message with exception.
         /// </summary>
         /// <param name="message"></param>
@@ -67,6 +72,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Error(exception, message);
         }
+
         /// <summary>Log error message with format and arguments.
         /// </summary>
         /// <param name="format"></param>
@@ -75,6 +81,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Error(format, args);
         }
+
         /// <summary>Log fatal message.
         /// </summary>
         /// <param name="message"></param>
@@ -82,6 +89,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Fatal(message);
         }
+
         /// <summary>Log fatal message with exception.
         /// </summary>
         /// <param name="message"></param>
@@ -90,6 +98,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Fatal(message, exception);
         }
+
         /// <summary>Log fatal message with format and arguments.
         /// </summary>
         /// <param name="format"></param>
@@ -98,6 +107,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Fatal(format, args);
         }
+
         /// <summary>Log info message.
         /// </summary>
         /// <param name="message"></param>
@@ -105,6 +115,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Information(message);
         }
+
         /// <summary>Log info message with exception.
         /// </summary>
         /// <param name="message"></param>
@@ -113,6 +124,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Information(exception, message);
         }
+
         /// <summary>Log info message with format and arguments.
         /// </summary>
         /// <param name="format"></param>
@@ -121,6 +133,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Information(format, args);
         }
+
         /// <summary>Log warning message.
         /// </summary>
         /// <param name="message"></param>
@@ -128,6 +141,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Warning(message);
         }
+
         /// <summary>Log warning message with exception.
         /// </summary>
         /// <param name="message"></param>
@@ -136,6 +150,7 @@ namespace KCommon.Core.Serilog
         {
             SerilogILogger.Warning(message, exception);
         }
+
         /// <summary>Log warning message with format and arguments.
         /// </summary>
         /// <param name="format"></param>

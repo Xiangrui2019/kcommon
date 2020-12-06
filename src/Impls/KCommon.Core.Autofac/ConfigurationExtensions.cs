@@ -13,6 +13,7 @@ namespace KCommon.Core.Autofac
         {
             return UseAutofac(configuration, new ContainerBuilder());
         }
+
         /// <summary>Use Autofac as the object container.
         /// </summary>
         /// <returns></returns>

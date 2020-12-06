@@ -15,7 +15,7 @@ namespace KCommon.Core.Extensions
         /// <returns></returns>
         public static bool IsWeekend(this DateTime dateTime)
         {
-            DayOfWeek[] weeks = { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            DayOfWeek[] weeks = {DayOfWeek.Saturday, DayOfWeek.Sunday};
             return weeks.Contains(dateTime.DayOfWeek);
         }
 
@@ -26,7 +26,8 @@ namespace KCommon.Core.Extensions
         /// <returns></returns>
         public static bool IsWeekday(this DateTime dateTime)
         {
-            DayOfWeek[] weeks = { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
+            DayOfWeek[] weeks =
+                {DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday};
             return weeks.Contains(dateTime.DayOfWeek);
         }
 
@@ -38,8 +39,8 @@ namespace KCommon.Core.Extensions
         /// <returns></returns>
         public static string ToUniqueString(this DateTime dateTime, bool milsec = false)
         {
-            int seconds = dateTime.Hour * 3600 + dateTime.Minute * 60 + dateTime.Second;
-            string value = $"{dateTime:yy}{dateTime.DayOfYear}{seconds}";
+            var seconds = dateTime.Hour * 3600 + dateTime.Minute * 60 + dateTime.Second;
+            var value = $"{dateTime:yy}{dateTime.DayOfYear}{seconds}";
             return milsec ? value + dateTime.ToString("fff") : value;
         }
 
@@ -48,8 +49,8 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static string ToJsGetTime(this DateTime dateTime, bool milsec = true)
         {
-            DateTime utc = dateTime.ToUniversalTime();
-            TimeSpan span = utc.Subtract(new DateTime(1970, 1, 1));
+            var utc = dateTime.ToUniversalTime();
+            var span = utc.Subtract(new DateTime(1970, 1, 1));
             return Math.Round(milsec ? span.TotalMilliseconds : span.TotalSeconds).ToString();
         }
 
@@ -58,10 +59,10 @@ namespace KCommon.Core.Extensions
         /// </summary>
         public static DateTime FromJsGetTime(this long jsTime)
         {
-            int length = jsTime.ToString().Length;
+            var length = jsTime.ToString().Length;
 
-            DateTime start = new DateTime(1970, 1, 1);
-            DateTime result = length == 10 ? start.AddSeconds(jsTime) : start.AddMilliseconds(jsTime);
+            var start = new DateTime(1970, 1, 1);
+            var result = length == 10 ? start.AddSeconds(jsTime) : start.AddMilliseconds(jsTime);
             return result.ToUniversalTime();
         }
     }

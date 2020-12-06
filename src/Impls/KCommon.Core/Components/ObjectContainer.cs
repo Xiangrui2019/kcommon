@@ -23,37 +23,44 @@ namespace KCommon.Core.Components
         {
             Current.Build();
         }
+
         /// <summary>Register a implementation type.
         /// </summary>
         /// <param name="implementationType">The implementation type.</param>
         /// <param name="serviceName">The service name.</param>
         /// <param name="life">The life cycle of the implementer type.</param>
-        public static void RegisterType(Type implementationType, string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+        public static void RegisterType(Type implementationType, string serviceName = null,
+            LifeStyle life = LifeStyle.Singleton)
         {
             Current.RegisterType(implementationType, serviceName, life);
         }
+
         /// <summary>Register a implementer type as a service implementation.
         /// </summary>
         /// <param name="serviceType">The implementation type.</param>
         /// <param name="implementationType">The implementation type.</param>
         /// <param name="serviceName">The service name.</param>
         /// <param name="life">The life cycle of the implementer type.</param>
-        public static void RegisterType(Type serviceType, Type implementationType, string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+        public static void RegisterType(Type serviceType, Type implementationType, string serviceName = null,
+            LifeStyle life = LifeStyle.Singleton)
         {
             Current.RegisterType(serviceType, implementationType, serviceName, life);
         }
+
         /// <summary>Register a implementer type as a service implementation.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
         /// <typeparam name="TImplementer">The implementer type.</typeparam>
         /// <param name="serviceName">The service name.</param>
         /// <param name="life">The life cycle of the implementer type.</param>
-        public static void Register<TService, TImplementer>(string serviceName = null, LifeStyle life = LifeStyle.Singleton)
+        public static void Register<TService, TImplementer>(string serviceName = null,
+            LifeStyle life = LifeStyle.Singleton)
             where TService : class
             where TImplementer : class, TService
         {
             Current.Register<TService, TImplementer>(serviceName, life);
         }
+
         /// <summary>Register a implementer type instance as a service implementation.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -66,6 +73,7 @@ namespace KCommon.Core.Components
         {
             Current.RegisterInstance<TService, TImplementer>(instance, serviceName);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -74,6 +82,7 @@ namespace KCommon.Core.Components
         {
             return Current.Resolve<TService>();
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <param name="serviceType">The service type.</param>
@@ -82,6 +91,7 @@ namespace KCommon.Core.Components
         {
             return Current.Resolve(serviceType);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <typeparam name="TService">The service type to resolve.</typeparam>
@@ -91,6 +101,7 @@ namespace KCommon.Core.Components
         {
             return Current.TryResolve<TService>(out instance);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <param name="serviceType">The service type to resolve.</param>
@@ -100,6 +111,7 @@ namespace KCommon.Core.Components
         {
             return Current.TryResolve(serviceType, out instance);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <typeparam name="TService">The service type.</typeparam>
@@ -109,6 +121,7 @@ namespace KCommon.Core.Components
         {
             return Current.ResolveNamed<TService>(serviceName);
         }
+
         /// <summary>Resolve a service.
         /// </summary>
         /// <param name="serviceName">The service name.</param>
@@ -118,6 +131,7 @@ namespace KCommon.Core.Components
         {
             return Current.ResolveNamed(serviceName, serviceType);
         }
+
         /// <summary>Try to retrieve a service from the container.
         /// </summary>
         /// <param name="serviceName">The name of the service to resolve.</param>

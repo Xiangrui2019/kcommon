@@ -8,7 +8,9 @@ namespace KCommon.Core.Serilog
     public class SerilogLoggerFactory : Abstract.Logging.ILoggerFactory
     {
         private readonly string _defaultLoggerName;
-        private readonly ConcurrentDictionary<string, SerilogLogger> _loggerDict = new ConcurrentDictionary<string, SerilogLogger>();
+
+        private readonly ConcurrentDictionary<string, SerilogLogger> _loggerDict =
+            new ConcurrentDictionary<string, SerilogLogger>();
 
         /// <summary>Default constructor
         /// </summary>
@@ -31,8 +33,10 @@ namespace KCommon.Core.Serilog
             string defaultLoggerFileName = "default",
             string defaultLoggerFileExtensions = "-.log",
             string contextPropertyName = "logger",
-            string defaultLoggerConsoleOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] - {Message:lj}{NewLine}{Exception}",
-            string defaultLoggerFileOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
+            string defaultLoggerConsoleOutputTemplate =
+                "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] - {Message:lj}{NewLine}{Exception}",
+            string defaultLoggerFileOutputTemplate =
+                "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
             bool defaultLoggerFileBuffered = true,
             long? defaultLoggerFileSizeLimitBytes = null,
             RollingInterval defaultLoggerFileRollingInterval = RollingInterval.Day,
@@ -42,16 +46,18 @@ namespace KCommon.Core.Serilog
             LogEventLevel consoleMinimumLevel = LogEventLevel.Information,
             LogEventLevel fileMinimumLevel = LogEventLevel.Information)
         {
-            var defaultLoggerFileFlushToDiskInterval = defaultLoggerFileFlushToDiskIntervalSenconds != null ? new TimeSpan(defaultLoggerFileFlushToDiskIntervalSenconds.Value * 1000 * 10000) : default(TimeSpan?);
+            var defaultLoggerFileFlushToDiskInterval = defaultLoggerFileFlushToDiskIntervalSenconds != null
+                ? new TimeSpan(defaultLoggerFileFlushToDiskIntervalSenconds.Value * 1000 * 10000)
+                : default(TimeSpan?);
             _defaultLoggerName = defaultLoggerName;
             _loggerDict.TryAdd(defaultLoggerName, new SerilogLogger(contextPropertyName, new LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .WriteTo.Console(
-                    restrictedToMinimumLevel: consoleMinimumLevel,
-                    outputTemplate: defaultLoggerConsoleOutputTemplate)
+                    consoleMinimumLevel,
+                    defaultLoggerConsoleOutputTemplate)
                 .WriteTo.File(defaultLoggerFileName + defaultLoggerFileExtensions,
-                    restrictedToMinimumLevel: fileMinimumLevel,
-                    outputTemplate: defaultLoggerFileOutputTemplate,
+                    fileMinimumLevel,
+                    defaultLoggerFileOutputTemplate,
                     buffered: defaultLoggerFileBuffered,
                     fileSizeLimitBytes: defaultLoggerFileSizeLimitBytes,
                     rollingInterval: defaultLoggerFileRollingInterval,
@@ -60,6 +66,7 @@ namespace KCommon.Core.Serilog
                     flushToDiskInterval: defaultLoggerFileFlushToDiskInterval)
                 .CreateLogger()));
         }
+
         /// <summary>Add a file logger.
         /// </summary>
         /// <param name="loggerName"></param>
@@ -79,7 +86,8 @@ namespace KCommon.Core.Serilog
             string loggerFileName,
             string contextPropertyName = "logger",
             string defaultLoggerFileExtensions = "-.log",
-            string defaultLoggerFileOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
+            string defaultLoggerFileOutputTemplate =
+                "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{logger}] - {Message:lj}{NewLine}{Exception}",
             bool defaultLoggerFileBuffered = true,
             long? defaultLoggerFileSizeLimitBytes = null,
             RollingInterval defaultLoggerFileRollingInterval = RollingInterval.Day,
@@ -88,12 +96,14 @@ namespace KCommon.Core.Serilog
             int? defaultLoggerFileFlushToDiskIntervalSenconds = 1,
             LogEventLevel minimumLevel = LogEventLevel.Information)
         {
-            var defaultLoggerFileFlushToDiskInterval = defaultLoggerFileFlushToDiskIntervalSenconds != null ? new TimeSpan(defaultLoggerFileFlushToDiskIntervalSenconds.Value * 1000 * 10000) : default(TimeSpan?);
+            var defaultLoggerFileFlushToDiskInterval = defaultLoggerFileFlushToDiskIntervalSenconds != null
+                ? new TimeSpan(defaultLoggerFileFlushToDiskIntervalSenconds.Value * 1000 * 10000)
+                : default(TimeSpan?);
             _loggerDict.TryAdd(loggerName, new SerilogLogger(contextPropertyName, new LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .WriteTo.File(loggerFileName + defaultLoggerFileExtensions,
-                    restrictedToMinimumLevel: minimumLevel,
-                    outputTemplate: defaultLoggerFileOutputTemplate,
+                    minimumLevel,
+                    defaultLoggerFileOutputTemplate,
                     buffered: defaultLoggerFileBuffered,
                     fileSizeLimitBytes: defaultLoggerFileSizeLimitBytes,
                     rollingInterval: defaultLoggerFileRollingInterval,
@@ -103,6 +113,7 @@ namespace KCommon.Core.Serilog
                 .CreateLogger()));
             return this;
         }
+
         /// <summary>Add a file logger.
         /// </summary>
         /// <param name="loggerName"></param>
@@ -122,6 +133,7 @@ namespace KCommon.Core.Serilog
         {
             return GetLogger(name);
         }
+
         /// <summary>Create a new logger.
         /// </summary>
         /// <param name="type"></param>
@@ -133,40 +145,30 @@ namespace KCommon.Core.Serilog
 
         private Abstract.Logging.ILogger GetLogger(string name)
         {
-            if (_loggerDict.TryGetValue(name, out SerilogLogger logger))
-            {
-                return logger;
-            }
+            if (_loggerDict.TryGetValue(name, out var logger)) return logger;
 
             string foundLoggerName = null;
             foreach (var loggerName in _loggerDict.Keys)
-            {
                 if (name.StartsWith(loggerName))
                 {
                     if (foundLoggerName == null)
-                    {
                         foundLoggerName = loggerName;
-                    }
-                    else if (loggerName.Length > foundLoggerName.Length)
-                    {
-                        foundLoggerName = loggerName;
-                    }
+                    else if (loggerName.Length > foundLoggerName.Length) foundLoggerName = loggerName;
                 }
-            }
 
             if (foundLoggerName != null)
-            {
-                if (_loggerDict.TryGetValue(foundLoggerName, out SerilogLogger foundLogger))
+                if (_loggerDict.TryGetValue(foundLoggerName, out var foundLogger))
                 {
-                    var newLogger = new SerilogLogger(foundLogger.ContextPropertyName, foundLogger.SerilogILogger.ForContext(foundLogger.ContextPropertyName, name));
+                    var newLogger = new SerilogLogger(foundLogger.ContextPropertyName,
+                        foundLogger.SerilogILogger.ForContext(foundLogger.ContextPropertyName, name));
                     _loggerDict.TryAdd(name, newLogger);
                     return newLogger;
                 }
-            }
 
-            if (_loggerDict.TryGetValue(_defaultLoggerName, out SerilogLogger defaultLogger))
+            if (_loggerDict.TryGetValue(_defaultLoggerName, out var defaultLogger))
             {
-                var newLogger = new SerilogLogger(defaultLogger.ContextPropertyName, defaultLogger.SerilogILogger.ForContext(defaultLogger.ContextPropertyName, name));
+                var newLogger = new SerilogLogger(defaultLogger.ContextPropertyName,
+                    defaultLogger.SerilogILogger.ForContext(defaultLogger.ContextPropertyName, name));
                 _loggerDict.TryAdd(name, newLogger);
                 return newLogger;
             }

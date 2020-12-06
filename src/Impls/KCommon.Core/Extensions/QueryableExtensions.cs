@@ -18,17 +18,12 @@ namespace KCommon.Core.Extensions
         /// <param name="condition"> 第三方条件 </param>
         /// <typeparam name="T"> 动态类型 </typeparam>
         /// <returns> 查询的结果 </returns>
-        public static IQueryable<T> WhereIf<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate, bool condition)
+        public static IQueryable<T> WhereIf<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate,
+            bool condition)
         {
-            if (!new NotNull().IsValid(source))
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            
-            if (!new NotNull().IsValid(predicate))
-            {
-                throw new ArgumentNullException(nameof(predicate));
-            }
+            if (!new NotNull().IsValid(source)) throw new ArgumentNullException(nameof(source));
+
+            if (!new NotNull().IsValid(predicate)) throw new ArgumentNullException(nameof(predicate));
 
             return condition ? source.Where(predicate) : source;
         }
@@ -45,19 +40,13 @@ namespace KCommon.Core.Extensions
             string propertyName,
             ListSortDirection sortDirection = ListSortDirection.Ascending)
         {
-            if (!new NotNull().IsValid(source))
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            
-            if (!new NotNull().IsValid(propertyName))
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
+            if (!new NotNull().IsValid(source)) throw new ArgumentNullException(nameof(source));
+
+            if (!new NotNull().IsValid(propertyName)) throw new ArgumentNullException(nameof(propertyName));
 
             return CollectionPropertySorter<T>.OrderBy(source, propertyName, sortDirection);
         }
-        
+
 
         /// <summary>
         /// 把<see cref="IOrderedQueryable{T}"/>集合继续按指定字段排序方式进行排序
@@ -71,19 +60,13 @@ namespace KCommon.Core.Extensions
             string propertyName,
             ListSortDirection sortDirection = ListSortDirection.Ascending)
         {
-            if (!new NotNullOrEmpty().IsValid(propertyName))
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
-            
-            if (!new NotNull().IsValid(source))
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            if (!new NotNullOrEmpty().IsValid(propertyName)) throw new ArgumentNullException(nameof(propertyName));
+
+            if (!new NotNull().IsValid(source)) throw new ArgumentNullException(nameof(source));
 
             return CollectionPropertySorter<T>.ThenBy(source, propertyName, sortDirection);
         }
-        
+
         /// <summary>
         /// 把<see cref="IOrderedQueryable{T}"/>集合分页
         /// </summary>

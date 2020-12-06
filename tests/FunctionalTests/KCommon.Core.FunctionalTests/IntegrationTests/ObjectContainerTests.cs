@@ -12,11 +12,11 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
         public void TestService()
         {
             Configuration
-               .Create()
-               .UseAutofac()
-               .RegisterCommonComponents()
-               .SetDefault<TestService, TestService>()
-               .BuildContainer();
+                .Create()
+                .UseAutofac()
+                .RegisterCommonComponents()
+                .SetDefault<TestService, TestService>()
+                .BuildContainer();
 
             var testService = ObjectContainer.Resolve<TestService>();
 

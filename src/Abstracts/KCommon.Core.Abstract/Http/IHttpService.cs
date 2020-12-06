@@ -9,7 +9,7 @@ namespace KCommon.Core.Abstract.Http
         Task<string> GetAsync(string url, bool forceHttp = false);
         T GetJson<T>(string url, bool forceHttp = false) where T : class;
         Task<T> GetJsonAsync<T>(string url, bool forceHttp = false) where T : class;
-        
+
         // Post请求
         string Post(string url, object data, bool forceHttp = false);
         Task<string> PostAsync(string url, object data, bool forceHttp = false);

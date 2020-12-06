@@ -7,6 +7,6 @@
         UnknownError = 2,
         NotFound = 4,
         Unauthorized = 5,
-        Breaker = 6,
+        Breaker = 6
     }
 }

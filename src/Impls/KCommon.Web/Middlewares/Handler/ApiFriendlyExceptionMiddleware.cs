@@ -48,6 +48,7 @@ namespace KCommon.Web.Middlewares.Handler
 
                     return;
                 }
+
                 throw;
             }
         }

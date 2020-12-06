@@ -19,12 +19,8 @@ namespace KCommon.Core.Utilities
                 var isValid = Validator.TryValidateObject(value, validationContext, results, true);
 
                 if (!isValid)
-                {
                     foreach (var item in results)
-                    {
                         modelState.AddModelError(item.MemberNames.First(), item.ErrorMessage);
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -42,10 +38,7 @@ namespace KCommon.Core.Utilities
                 var results = new List<ValidationResult>();
                 var isValid = Validator.TryValidateObject(value, validationContext, results, true);
 
-                if (!isValid)
-                {
-                    throw new ArgumentException(results.First().ErrorMessage);
-                }
+                if (!isValid) throw new ArgumentException(results.First().ErrorMessage);
             }
             catch (Exception ex)
             {

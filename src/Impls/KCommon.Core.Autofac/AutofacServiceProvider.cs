@@ -21,9 +21,7 @@ namespace KCommon.Core.Autofac
         {
             Container = container;
             if (autoSetObjectContainer && ObjectContainer.Current is AutofacObjectContainer autofacObjectContainer)
-            {
                 autofacObjectContainer.Container = container;
-            }
         }
 
         /// <summary>Resolve a service.
@@ -47,10 +45,7 @@ namespace KCommon.Core.Autofac
             if (!_disposed)
             {
                 _disposed = true;
-                if (disposing)
-                {
-                    Container.Dispose();
-                }
+                if (disposing) Container.Dispose();
             }
         }
 

@@ -23,7 +23,9 @@ namespace KCommon.Core.MemoryCache
         }
 
         public T Get<T>(string cacheKey)
-            => _cache.Get<T>(cacheKey);
+        {
+            return _cache.Get<T>(cacheKey);
+        }
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
@@ -33,10 +35,8 @@ namespace KCommon.Core.MemoryCache
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions();
                 if (cachedMinutes != 0)
-                {
                     cacheEntryOptions.SetSlidingExpiration(
                         TimeSpan.FromMinutes(cachedMinutes));
-                }
 
                 _cache.Set(cacheKey, resultValue, cacheEntryOptions);
             }
@@ -52,10 +52,8 @@ namespace KCommon.Core.MemoryCache
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions();
                 if (cachedMinutes != 0)
-                {
                     cacheEntryOptions.SetSlidingExpiration(
                         TimeSpan.FromMinutes(cachedMinutes));
-                }
 
                 _cache.Set(cacheKey, resultValue, cacheEntryOptions);
             }
@@ -64,17 +62,17 @@ namespace KCommon.Core.MemoryCache
         }
 
         public Task<T> GetAsync<T>(string cacheKey)
-            => Task.FromResult(Get<T>(cacheKey));
+        {
+            return Task.FromResult(Get<T>(cacheKey));
+        }
 
         public void Set<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions();
 
             if (cachedMinutes != 0)
-            {
                 cacheEntryOptions.SetSlidingExpiration(
                     TimeSpan.FromMinutes(cachedMinutes));
-            }
 
             _cache.Set<T>(cacheKey, cacheValue, cacheEntryOptions);
         }

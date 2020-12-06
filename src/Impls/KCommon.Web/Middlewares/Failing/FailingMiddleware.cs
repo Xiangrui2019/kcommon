@@ -16,6 +16,7 @@ namespace KCommon.Web.Middlewares.Failing
         private readonly FailingOptions _options;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly ILogger _logger;
+
         public FailingMiddleware(
             RequestDelegate next,
             ILoggerFactory loggerFactory,
@@ -44,7 +45,7 @@ namespace KCommon.Web.Middlewares.Failing
                 await SendNoResponse(context, new MessageModel
                 {
                     Code = ErrorType.Breaker,
-                    Message = "对不起, 服务器无法处理您的请求.",
+                    Message = "对不起, 服务器无法处理您的请求."
                 });
             }
             else
@@ -58,10 +59,7 @@ namespace KCommon.Web.Middlewares.Failing
             var enable = context.Request.Query.Keys.Any(k => k == "enable");
             var disable = context.Request.Query.Keys.Any(k => k == "disable");
 
-            if (enable && disable)
-            {
-                throw new ArgumentException("必须只传入一个输入, 两个不行");
-            }
+            if (enable && disable) throw new ArgumentException("必须只传入一个输入, 两个不行");
 
             if (disable)
             {
@@ -74,6 +72,7 @@ namespace KCommon.Web.Middlewares.Failing
 
                 return;
             }
+
             if (enable)
             {
                 _mustFail = true;
@@ -95,7 +94,7 @@ namespace KCommon.Web.Middlewares.Failing
 
         private async Task SendOkResponse(HttpContext context, MessageModel message)
         {
-            context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            context.Response.StatusCode = (int) System.Net.HttpStatusCode.OK;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(
                 _jsonSerializer.Serialize(message));
@@ -103,7 +102,7 @@ namespace KCommon.Web.Middlewares.Failing
 
         private async Task SendNoResponse(HttpContext context, MessageModel message)
         {
-            context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int) System.Net.HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(
                 _jsonSerializer.Serialize(message));
@@ -114,13 +113,11 @@ namespace KCommon.Web.Middlewares.Failing
             var rpath = context.Request.Path.Value;
 
             if (_options.NotFilteredPaths.Any(p => p.Equals(rpath, StringComparison.InvariantCultureIgnoreCase)))
-            {
                 return false;
-            }
 
             return _mustFail &&
-                (_options.EndpointPaths.Any(x => x == rpath)
-                || _options.EndpointPaths.Count == 0);
+                   (_options.EndpointPaths.Any(x => x == rpath)
+                    || _options.EndpointPaths.Count == 0);
         }
     }
 }

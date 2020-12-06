@@ -20,7 +20,7 @@ namespace KCommon.Web.AOP
                     Message = "对不起, 我们找不到这个资源"
                 });
             }
-            
+
             base.OnActionExecuted(context);
         }
     }

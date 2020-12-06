@@ -17,14 +17,8 @@ namespace KCommon.Core.Utilities
         /// <returns></returns>
         public static D CreateDelegate<D>(MethodInfo methodInfo, Type[] parameterTypes) where D : class
         {
-            if (methodInfo == null)
-            {
-                throw new ArgumentNullException("methodInfo");
-            }
-            if (parameterTypes == null)
-            {
-                throw new ArgumentNullException("parameterTypes");
-            }
+            if (methodInfo == null) throw new ArgumentNullException("methodInfo");
+            if (parameterTypes == null) throw new ArgumentNullException("parameterTypes");
             var parameters = methodInfo.GetParameters();
             var dynamicMethod = new DynamicMethod(
                 methodInfo.Name,
@@ -43,18 +37,20 @@ namespace KCommon.Core.Utilities
                 dynamicEmit.LoadArgument(0);
                 dynamicEmit.CastTo(typeof(object), methodInfo.DeclaringType);
             }
-            for (int index = 0; index < parameters.Length; index++)
+
+            for (var index = 0; index < parameters.Length; index++)
             {
                 dynamicEmit.LoadArgument(index + 1);
                 dynamicEmit.CastTo(parameterTypes[index + 1], parameters[index].ParameterType);
             }
+
             dynamicEmit.Call(methodInfo);
             dynamicEmit.Return();
 
             return dynamicMethod.CreateDelegate(typeof(D)) as D;
         }
 
-        class DynamicEmit
+        private class DynamicEmit
         {
             private ILGenerator _ilGenerator;
             private static readonly Dictionary<Type, OpCode> _converts = new Dictionary<Type, OpCode>();
@@ -74,13 +70,15 @@ namespace KCommon.Core.Utilities
                 _converts.Add(typeof(bool), OpCodes.Conv_I1);
                 _converts.Add(typeof(char), OpCodes.Conv_U2);
             }
+
             public DynamicEmit(DynamicMethod dynamicMethod)
             {
-                this._ilGenerator = dynamicMethod.GetILGenerator();
+                _ilGenerator = dynamicMethod.GetILGenerator();
             }
+
             public DynamicEmit(ILGenerator ilGen)
             {
-                this._ilGenerator = ilGen;
+                _ilGenerator = ilGen;
             }
 
             public void LoadArgument(int argumentIndex)
@@ -88,39 +86,33 @@ namespace KCommon.Core.Utilities
                 switch (argumentIndex)
                 {
                     case 0:
-                        this._ilGenerator.Emit(OpCodes.Ldarg_0);
+                        _ilGenerator.Emit(OpCodes.Ldarg_0);
                         break;
                     case 1:
-                        this._ilGenerator.Emit(OpCodes.Ldarg_1);
+                        _ilGenerator.Emit(OpCodes.Ldarg_1);
                         break;
                     case 2:
-                        this._ilGenerator.Emit(OpCodes.Ldarg_2);
+                        _ilGenerator.Emit(OpCodes.Ldarg_2);
                         break;
                     case 3:
-                        this._ilGenerator.Emit(OpCodes.Ldarg_3);
+                        _ilGenerator.Emit(OpCodes.Ldarg_3);
                         break;
                     default:
                         if (argumentIndex < 0x100)
-                        {
-                            this._ilGenerator.Emit(OpCodes.Ldarg_S, (byte)argumentIndex);
-                        }
+                            _ilGenerator.Emit(OpCodes.Ldarg_S, (byte) argumentIndex);
                         else
-                        {
-                            this._ilGenerator.Emit(OpCodes.Ldarg, argumentIndex);
-                        }
+                            _ilGenerator.Emit(OpCodes.Ldarg, argumentIndex);
                         break;
                 }
             }
+
             public void CastTo(Type fromType, Type toType)
             {
                 if (fromType != toType)
                 {
                     if (toType == typeof(void))
                     {
-                        if (!(fromType == typeof(void)))
-                        {
-                            this.Pop();
-                        }
+                        if (!(fromType == typeof(void))) Pop();
                     }
                     else
                     {
@@ -128,48 +120,47 @@ namespace KCommon.Core.Utilities
                         {
                             if (toType.IsValueType)
                             {
-                                this.Convert(toType);
+                                Convert(toType);
                                 return;
                             }
-                            this._ilGenerator.Emit(OpCodes.Box, fromType);
+
+                            _ilGenerator.Emit(OpCodes.Box, fromType);
                         }
-                        this.CastTo(toType);
+
+                        CastTo(toType);
                     }
                 }
             }
+
             public void CastTo(Type toType)
             {
                 if (toType.IsValueType)
-                {
-                    this._ilGenerator.Emit(OpCodes.Unbox_Any, toType);
-                }
+                    _ilGenerator.Emit(OpCodes.Unbox_Any, toType);
                 else
-                {
-                    this._ilGenerator.Emit(OpCodes.Castclass, toType);
-                }
+                    _ilGenerator.Emit(OpCodes.Castclass, toType);
             }
+
             public void Pop()
             {
-                this._ilGenerator.Emit(OpCodes.Pop);
+                _ilGenerator.Emit(OpCodes.Pop);
             }
+
             public void Convert(Type toType)
             {
-                this._ilGenerator.Emit(_converts[toType]);
+                _ilGenerator.Emit(_converts[toType]);
             }
+
             public void Return()
             {
-                this._ilGenerator.Emit(OpCodes.Ret);
+                _ilGenerator.Emit(OpCodes.Ret);
             }
+
             public void Call(MethodInfo method)
             {
                 if (method.IsFinal || !method.IsVirtual)
-                {
-                    this._ilGenerator.EmitCall(OpCodes.Call, method, null);
-                }
+                    _ilGenerator.EmitCall(OpCodes.Call, method, null);
                 else
-                {
-                    this._ilGenerator.EmitCall(OpCodes.Callvirt, method, null);
-                }
+                    _ilGenerator.EmitCall(OpCodes.Callvirt, method, null);
             }
         }
     }

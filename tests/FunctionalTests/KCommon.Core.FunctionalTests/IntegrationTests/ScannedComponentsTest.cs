@@ -15,15 +15,15 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
         {
             var assemblies = new Assembly[]
             {
-                Assembly.Load("KCommon.Core.FunctionalTests"),
+                Assembly.Load("KCommon.Core.FunctionalTests")
             };
 
             Configuration
-               .Create()
-               .UseAutofac()
-               .RegisterCommonComponents()
-               .RegisterScannedComponents(assemblies)
-               .BuildContainer();
+                .Create()
+                .UseAutofac()
+                .RegisterCommonComponents()
+                .RegisterScannedComponents(assemblies)
+                .BuildContainer();
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
             Assert.AreEqual(service.Tes(), 10);
             Assert.AreEqual(service.Tes2(), 10);
         }
-        
+
         [TestMethod]
         public void TestInterfaceReslove()
         {
@@ -47,7 +47,7 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
     [Component]
     public class Test
     {
-        private readonly ITestInterface _i; 
+        private readonly ITestInterface _i;
 
         public Test(ITestInterface i)
         {
@@ -64,12 +64,12 @@ namespace KCommon.Core.FunctionalTests.IntegrationTests
             return _i.Tes();
         }
     }
-    
+
     public interface ITestInterface
     {
         int Tes();
     }
-    
+
     [Component]
     public class TestInterface : ITestInterface
     {

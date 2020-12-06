@@ -5,13 +5,7 @@ namespace KCommon.Core.Logging
 {
     public class EmptyLogger : ILogger
     {
-        public bool IsDebugEnabled
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsDebugEnabled => false;
 
         public void Debug(string message)
         {

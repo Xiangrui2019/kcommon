@@ -15,6 +15,7 @@ namespace KCommon.Core.Logging
         {
             return Logger;
         }
+
         /// <summary>Create an empty logger instance by type.
         /// </summary>
         /// <param name="type"></param>

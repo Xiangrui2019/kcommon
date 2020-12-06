@@ -9,10 +9,8 @@ namespace KCommon.Web.Abstract.EntityframeworkCore.Interfaces
 {
     public interface IPageable
     {
-        [Range(1, int.MaxValue)]
-        int PageNumber { get; set; }
+        [Range(1, int.MaxValue)] int PageNumber { get; set; }
 
-        [Range(1, int.MaxValue)]
-        int PageSize { get; set; }
+        [Range(1, int.MaxValue)] int PageSize { get; set; }
     }
 }
