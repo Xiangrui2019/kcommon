@@ -13,6 +13,9 @@ namespace KCommon.Core.Abstract.Cache
         Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20);
         T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20);
 
+        T TryGet<T>(string cacheKey);
+        Task<T> TryGetAsync<T>(string cacheKey);
+
         void Clear(string cacheKey);
     }
 }

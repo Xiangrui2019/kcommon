@@ -19,6 +19,11 @@ namespace KCommon.Core.RedisCache
             _cache = factory.GetDatabase();
         }
 
+        public Task<T> TryGetAsync<T>(string cacheKey)
+        {
+            var result = _cache.StringGet(cacheKey);
+        }
+
         public void Clear(string cacheKey)
         {
             _cache.StringSet(cacheKey, "");
@@ -53,6 +58,11 @@ namespace KCommon.Core.RedisCache
             }
 
             return result;
+        }
+
+        public T TryGet<T>(string cacheKey)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)

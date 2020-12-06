@@ -9,6 +9,11 @@ namespace KCommon.Core.Cache
 {
     public class EmptyCache : ICache
     {
+        public Task<T> TryGetAsync<T>(string cacheKey)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Clear(string cacheKey)
         {
             throw new NotImplementedException();
@@ -20,6 +25,11 @@ namespace KCommon.Core.Cache
         }
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T TryGet<T>(string cacheKey)
         {
             throw new NotImplementedException();
         }

@@ -17,6 +17,13 @@ namespace KCommon.Core.MemoryCache
             _cache = cache;
         }
 
+        public Task<bool> TryGetAsync<T>(string cacheKey, out T result)
+        {
+            var status = _cache.TryGetValue(cacheKey, out T resultValue);
+            result = resultValue;
+            return Task.FromResult(status);
+        }
+
         public void Clear(string cacheKey)
         {
             _cache.Remove(cacheKey);
@@ -44,9 +51,16 @@ namespace KCommon.Core.MemoryCache
             return resultValue;
         }
 
+        public bool TryGet<T>(string cacheKey, out T result)
+        {
+            var status = TryGetAsync<T>(cacheKey, out T resultValue).GetAwaiter().GetResult();
+            result = resultValue;
+            return status;
+        }
+
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue) || resultValue == null)
+            if (!(cacheKey, out T resultValue) || resultValue == null)
             {
                 resultValue = await backup();
 
