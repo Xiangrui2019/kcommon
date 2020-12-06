@@ -25,12 +25,25 @@ namespace KCommon.MicroServices.Consul
 
         public async Task<Service> ResloveServiceAsync(string moduleName, string serviceName)
         {
-            var service_entrys = await _cache.GetAndCacheAsync(
+            var serviceEntries = await _cache.GetAndCacheAsync(
                 $"ServiceDiscovery-{moduleName}-{serviceName}",
-                async () => await GetServiceAsync(moduleName, serviceName), 5);
+                async () => await GetServiceAsync(moduleName, serviceName));
+            var service = new Service(moduleName, serviceName);
+
+            foreach (var serviceEntry in serviceEntries)
+            {
+                service.AddServiceEndpoints(
+                    new Endpoint(serviceEntry.Service.Address, serviceEntry.Service.Port, true));
+            }
+
+            return service;
         }
 
-        private async Task<QueryResult<ServiceEntry[]>> GetServiceAsync(string moduleName, string serviceName)
-            => await _client.Health.Service($"{moduleName}.{serviceName}", string.Empty, true);
+        private async Task<ServiceEntry[]> GetServiceAsync(string moduleName, string serviceName)
+        {
+            var services = await _client.Health.Service($"{moduleName}.{serviceName}", string.Empty, true);
+
+            return services.Response;
+        }
     }
 }
