@@ -71,7 +71,10 @@ namespace KCommon.Core.RedisCache
 
         public bool TryGet<T>(string cacheKey, out T result)
         {
+            var value = TryGetAsync(cacheKey, out T resultValue).GetAwaiter().GetResult();
+            result = resultValue;
             
+            return value;
         }
 
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
