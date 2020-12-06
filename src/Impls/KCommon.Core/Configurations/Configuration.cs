@@ -7,6 +7,7 @@ using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Abstract.Serializing;
+using KCommon.Core.Async;
 using KCommon.Core.Cache;
 using KCommon.Core.Components;
 using KCommon.Core.Http;
@@ -73,6 +74,7 @@ namespace KCommon.Core.Configurations
             SetDefault<IJsonSerializer, EmptyJsonSerializer>();
             SetDefault<ICache, EmptyCache>();
             SetDefault<IHttpService, EmptyHttpService>();
+            SetDefault<CannonService, CannonService>();
 
             return this;
         }
