@@ -1,15 +1,12 @@
 ﻿using KCommon.Core.Abstract.Cache;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KCommon.Core.Cache
 {
     public class EmptyCache : ICache
     {
-        public Task<bool> TryGetAsync<T>(string cacheKey, out T result)
+        public Task<(T, bool)> TryGetAsync<T>(string cacheKey)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +26,7 @@ namespace KCommon.Core.Cache
             throw new NotImplementedException();
         }
 
-        public bool TryGet<T>(string cacheKey, out T result)
+        public (T, bool) TryGet<T>(string cacheKey)
         {
             throw new NotImplementedException();
         }
