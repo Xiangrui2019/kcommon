@@ -17,11 +17,11 @@ namespace KCommon.Core.MemoryCache
             _cache = cache;
         }
 
-        public Task<bool> TryGetAsync<T>(string cacheKey, out T result)
+        public Task<(T, bool)> TryGetAsync<T>(string cacheKey)
         {
             var status = _cache.TryGetValue(cacheKey, out T resultValue);
-            result = resultValue;
-            return Task.FromResult(status);
+            
+            return Task.FromResult((resultValue, status));
         }
 
         public void Clear(string cacheKey)
@@ -36,40 +36,28 @@ namespace KCommon.Core.MemoryCache
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
-            if (!_cache.TryGetValue(cacheKey, out T resultValue) || resultValue == null)
+            var (resultValue, status) = TryGet<T>(cacheKey);
+            if (status == false || resultValue == null)
             {
                 resultValue = backup();
 
-                var cacheEntryOptions = new MemoryCacheEntryOptions();
-                if (cachedMinutes != 0)
-                    cacheEntryOptions.SetSlidingExpiration(
-                        TimeSpan.FromMinutes(cachedMinutes));
-
-                _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+                Set<T>(cacheKey, resultValue, cachedMinutes);
             }
 
             return resultValue;
         }
 
-        public bool TryGet<T>(string cacheKey, out T result)
-        {
-            var status = TryGetAsync<T>(cacheKey, out T resultValue).GetAwaiter().GetResult();
-            result = resultValue;
-            return status;
-        }
+        public (T, bool) TryGet<T>(string cacheKey)
+            => TryGetAsync<T>(cacheKey).GetAwaiter().GetResult();
 
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
-            if (!await TryGetAsync(cacheKey, out T resultValue) || resultValue == null)
+            var (resultValue, status) = await TryGetAsync<T>(cacheKey);
+            if (status == false || resultValue == null)
             {
                 resultValue = await backup();
-
-                var cacheEntryOptions = new MemoryCacheEntryOptions();
-                if (cachedMinutes != 0)
-                    cacheEntryOptions.SetSlidingExpiration(
-                        TimeSpan.FromMinutes(cachedMinutes));
-
-                _cache.Set(cacheKey, resultValue, cacheEntryOptions);
+                
+                await SetAsync(cacheKey, resultValue, cachedMinutes);
             }
 
             return resultValue;
