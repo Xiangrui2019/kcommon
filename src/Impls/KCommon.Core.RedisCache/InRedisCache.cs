@@ -19,87 +19,49 @@ namespace KCommon.Core.RedisCache
             _cache = factory.GetDatabase();
         }
 
-        public async Task<bool> TryGetAsync<T>(string cacheKey, out T result)
+        public void Set<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
         {
-            var value = await GetAsync<T>(cacheKey);
-
-            if (value == null)
-            {
-                result = default(T);
-                return false;
-            }
-
-            result = value;
-            return true;
-        }
-
-        public void Clear(string cacheKey)
-        {
-            _cache.StringSet(cacheKey, "");
+            throw new NotImplementedException();
         }
 
         public T Get<T>(string cacheKey)
         {
-            var result = _cache.StringGet(cacheKey);
-
-            if (result == "") return default(T);
-
-            return JsonConvert.DeserializeObject<T>(result);
+            throw new NotImplementedException();
         }
 
-        public async Task<T> GetAsync<T>(string cacheKey)
+        public Task SetAsync<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
         {
-            var result = await _cache.StringGetAsync(cacheKey);
+            throw new NotImplementedException();
+        }
 
-            if (result == "") return default(T);
+        public Task<T> GetAsync<T>(string cacheKey)
+        {
+            throw new NotImplementedException();
+        }
 
-            return JsonConvert.DeserializeObject<T>(result);
+        public Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
+        {
+            throw new NotImplementedException();
         }
 
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
-            var result = Get<T>(cacheKey);
-
-            if (result == null)
-            {
-                result = backup();
-                Set<T>(cacheKey, result, cachedMinutes);
-            }
-
-            return result;
+            throw new NotImplementedException();
         }
 
-        public bool TryGet<T>(string cacheKey, out T result)
+        public (T, bool) TryGet<T>(string cacheKey)
         {
-            var value = TryGetAsync(cacheKey, out T resultValue).GetAwaiter().GetResult();
-            result = resultValue;
-            
-            return value;
+            throw new NotImplementedException();
         }
 
-        public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
+        public Task<(T, bool)> TryGetAsync<T>(string cacheKey)
         {
-            var result = await GetAsync<T>(cacheKey);
-
-            if (result == null)
-            {
-                result = await backup();
-                await SetAsync<T>(cacheKey, result, cachedMinutes);
-            }
-
-            return result;
+            throw new NotImplementedException();
         }
 
-        public void Set<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
+        public void Clear(string cacheKey)
         {
-            var result = JsonConvert.SerializeObject(cacheValue);
-            _cache.StringSet(cacheKey, result, TimeSpan.FromMinutes(cachedMinutes));
-        }
-
-        public async Task SetAsync<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
-        {
-            var result = JsonConvert.SerializeObject(cacheValue);
-            await _cache.StringSetAsync(cacheKey, result, TimeSpan.FromMinutes(cachedMinutes));
+            throw new NotImplementedException();
         }
     }
 }
