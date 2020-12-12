@@ -24,6 +24,18 @@ namespace KCommon.Core.UnitTests.Components
 
             var service = ObjectContainer.Resolve<MockTestService>();
             Assert.AreNotEqual(service, null);
+            Assert.AreEqual(service.Test(), true);
+        }
+
+        [TestMethod]
+        public void TestAspect()
+        {
+            ObjectContainer.SetContainer(new AutofacObjectContainer());
+            ObjectContainer.Register<ITestAspect, TestAspect>();
+            ObjectContainer.Build();
+
+            var service = ObjectContainer.Resolve<ITestAspect>();
+            Assert.AreEqual(service.T(), true);
         }
     }
 }
