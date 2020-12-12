@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core\KCommon.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations" />
+  </ItemGroup>
+
 </Project>
