@@ -9,7 +9,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AspectCore.Extensions.Autofac" Version="2.1.0" />
       <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     </ItemGroup>
 

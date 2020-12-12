@@ -20,6 +20,7 @@ namespace KCommon.Core.Autofac
             builder.Populate(services);
             return builder;
         }
+        
         public IServiceProvider CreateServiceProvider(ContainerBuilder containerBuilder)
         {
             if (containerBuilder == null) throw new ArgumentNullException(nameof(containerBuilder));

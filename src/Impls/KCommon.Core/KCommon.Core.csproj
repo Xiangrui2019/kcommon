@@ -5,16 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspectCore.Extensions.Autofac" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
+    <PackageReference Include="Polly" Version="6.0.1" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\KCommon.Core.Abstract\KCommon.Core.Abstract.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="AOP" />
   </ItemGroup>
 
 </Project>
