@@ -12,5 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\KCommon.Core.Abstract\KCommon.Core.Abstract.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="AOP" />
+  </ItemGroup>
 
 </Project>
