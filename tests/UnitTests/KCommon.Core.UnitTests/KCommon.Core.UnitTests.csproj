@@ -15,8 +15,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Autofac\KCommon.Core.Autofac.csproj" />
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.JsonNet\KCommon.Core.JsonNet.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.MemoryCache\KCommon.Core.MemoryCache.csproj" />
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Nlog\KCommon.Core.Nlog.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.RedisCache\KCommon.Core.RedisCache.csproj" />
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Serilog\KCommon.Core.Serilog.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core\KCommon.Core.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using ECommon.Utilities;
-using KCommon.Core.Utilities;
 using KCommon.Core.Validations;
 
 namespace KCommon.Core.Extensions
@@ -20,7 +18,7 @@ namespace KCommon.Core.Extensions
         {
             if (!new NotNull().IsValid(endpoint)) throw new ArgumentNullException(nameof(endpoint));
 
-            return string.Format("{0}:{1}", endpoint.Address, endpoint.Port);
+            return $"{endpoint.Address}:{endpoint.Port}";
         }
 
         public static IPEndPoint ToEndPoint(this string address)

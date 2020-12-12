@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace KCommon.Core.Utilities
 {
-    public static class ValidatetionHelper
+    public static class ValidationHelper
     {
         public static ModelStateDictionary Ensure(object value)
         {
