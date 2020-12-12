@@ -28,8 +28,8 @@ namespace KCommon.Core.RedisCache
         public T Get<T>(string cacheKey)
         {
             var data = _cache.StringGet(cacheKey);
-
-            return data == "" ? default(T) : JsonConvert.DeserializeObject<T>(data);
+            
+            return data.IsNullOrEmpty ? default(T) : JsonConvert.DeserializeObject<T>(data);
         }
 
         public async Task SetAsync<T>(string cacheKey, T cacheValue, int cachedMinutes = 20)
@@ -45,7 +45,13 @@ namespace KCommon.Core.RedisCache
         public async Task<T> GetAsync<T>(string cacheKey)
         {
             var data = await _cache.StringGetAsync(cacheKey);
-            return data == "" ? default(T) : JsonConvert.DeserializeObject<T>(data);
+
+            if (data.IsNullOrEmpty)
+            {
+                return await Task.FromResult(default(T));
+            }
+            
+            return JsonConvert.DeserializeObject<T>(data);
         }
 
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
@@ -78,7 +84,7 @@ namespace KCommon.Core.RedisCache
         {
             var result = _cache.StringGet(cacheKey);
 
-            if (result == "")
+            if (result.IsNullOrEmpty)
             {
                 return (default(T), false);
             }
@@ -90,7 +96,7 @@ namespace KCommon.Core.RedisCache
         {
             var result = await _cache.StringGetAsync(cacheKey);
 
-            if (result == "")
+            if (result.IsNullOrEmpty)
             {
                 return (default(T), false);
             }
