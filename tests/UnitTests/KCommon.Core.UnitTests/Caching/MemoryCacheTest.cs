@@ -55,6 +55,12 @@ namespace KCommon.Core.UnitTests.Caching
 
             var result = await _cache.GetAsync<string>("ccc");
             Assert.AreEqual(result, "123");
+            
+            Thread.Sleep(TimeSpan.FromMinutes(1));
+            
+            result = await _cache.GetAsync<string>("ccc");
+            Assert.AreNotEqual(result, "123");
+            Assert.AreEqual(result, null);
         }
 
         [TestMethod]
