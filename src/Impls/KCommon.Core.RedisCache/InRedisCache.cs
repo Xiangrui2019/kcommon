@@ -51,7 +51,7 @@ namespace KCommon.Core.RedisCache
         public async Task<T> GetAndCacheAsync<T>(string cacheKey, Func<Task<T>> backup, int cachedMinutes = 20)
         {
             var (resultValue, status) = await TryGetAsync<T>(cacheKey);
-            if (status == false || resultValue == null)
+            if (status == false)
             {
                 resultValue = await backup();
                 
@@ -64,7 +64,7 @@ namespace KCommon.Core.RedisCache
         public T GetAndCache<T>(string cacheKey, Func<T> backup, int cachedMinutes = 20)
         {
             var (resultValue, status) = TryGet<T>(cacheKey);
-            if (status == false || resultValue == null)
+            if (status == false)
             {
                 resultValue = backup();
 
