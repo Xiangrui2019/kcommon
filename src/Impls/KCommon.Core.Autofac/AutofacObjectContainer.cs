@@ -24,6 +24,10 @@ namespace KCommon.Core.Autofac
         public AutofacObjectContainer(ContainerBuilder containerBuilder)
         {
             ContainerBuilder = containerBuilder;
+            // 注册动态代理器
+            // 方便实现后续的面向切面编程实现.
+            // 目前所有IOC都统一使用AspectCore的动态代理器.
+            ContainerBuilder.RegisterDynamicProxy();
         }
         /// <summary>Parameterized constructor.
         /// </summary>
@@ -36,11 +40,6 @@ namespace KCommon.Core.Autofac
         /// </summary>
         public void Build()
         {
-            // 注册动态代理器
-            // 方便实现后续的面向切面编程实现.
-            // 目前所有IOC都统一使用AspectCore的动态代理器.
-            ContainerBuilder.RegisterDynamicProxy();
-            
             Container = ContainerBuilder.Build();
         }
         /// <summary>Register a implementation type.
