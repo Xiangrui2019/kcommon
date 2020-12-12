@@ -5,12 +5,12 @@
     {
         /// <summary>Represents a component is a transient component.
         /// </summary>
-        Transient,
+        Transient = 0,
         /// <summary>Represents a component is a scoped component.
         /// </summary>
-        Scoped,
+        Scoped = 1,
         /// <summary>Represents a component is a singleton component.
         /// </summary>
-        Singleton
+        Singleton = 2
     }
 }
