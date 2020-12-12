@@ -38,6 +38,8 @@ namespace KCommon.Core
         public Configuration RegisterCommonComponents()
         {
             SetDefault<IAppConfig, EmptyAppConfig>();
+            SetDefault<IAppEnvironment, EmptyAppEnvironment>();
+            
             return this;
         }
         
