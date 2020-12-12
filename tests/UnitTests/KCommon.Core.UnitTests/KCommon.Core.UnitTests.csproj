@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Autofac\KCommon.Core.Autofac.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core\KCommon.Core.csproj" />
   </ItemGroup>
 
