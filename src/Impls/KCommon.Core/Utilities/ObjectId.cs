@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
-namespace ECommon.Utilities
+namespace KCommon.Core.Utilities
 {
     /// <summary>Represents an ObjectId
     /// </summary>
