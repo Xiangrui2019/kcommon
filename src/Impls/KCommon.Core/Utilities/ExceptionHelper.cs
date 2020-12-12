@@ -52,7 +52,35 @@ namespace KCommon.Core.Utilities
                 return defaultValue;
             }
         }
+        
+        public static Exception CatchExceptionNonReturn<T>(Func<T> action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
 
+            return null;
+        }
+        
+        public static async Task<Exception> CatchExceptionNonReturnAsync<T>(Func<Task<T>> action)
+        {
+            try
+            {
+                await action();
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+
+            return null;
+        }
+        
         public static (T, Exception) CatchException<T>(Func<T> action, T defaultValue = default(T))
         {
             try
