@@ -1,8 +1,10 @@
 ﻿using System;
 using KCommon.Core.Abstract.Components;
+using KCommon.Core.Abstract.Configurations;
 using KCommon.Core.Components;
+using KCommon.Core.Configurations;
 
-namespace KCommon.Core.Configurations
+namespace KCommon.Core
 {
     public class Configuration
     {
@@ -35,6 +37,7 @@ namespace KCommon.Core.Configurations
 
         public Configuration RegisterCommonComponents()
         {
+            SetDefault<IAppConfig, EmptyAppConfig>();
             return this;
         }
         
