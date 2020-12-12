@@ -1,9 +1,14 @@
-﻿using KCommon.Core.Abstract.Components;
+﻿using KCommon.Core.Abstract.Caching;
+using KCommon.Core.Abstract.Components;
+using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Logging;
 using KCommon.Core.Abstract.Serializing;
+using KCommon.Core.Caching;
 using KCommon.Core.Components;
+using KCommon.Core.Http;
 using KCommon.Core.Logging;
 using KCommon.Core.Serializing;
+using KCommon.Core.Utilities;
 
 namespace KCommon.Core.Configurations
 {
@@ -43,6 +48,9 @@ namespace KCommon.Core.Configurations
             SetDefault<IJsonSerializer, NotImplementedJsonSerializer>();
             SetDefault<IBinarySerializer, DefaultBinarySerializer>();
             SetDefault<IMessagePackSerializer, NotImplementedMessagePackSerializer>();
+            SetDefault<IHttpService, EmptyHttpService>();
+            SetDefault<ICache, EmptyCache>();
+            SetDefault<Cannon, Cannon>();
             
             return this;
         }
