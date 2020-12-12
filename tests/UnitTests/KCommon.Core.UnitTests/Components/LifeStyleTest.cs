@@ -28,7 +28,16 @@ namespace KCommon.Core.UnitTests.Components
             var life = LifeStyle.Transient;
             var life_eq = LifeStyle.Transient;
             
-            Assert.AreEqual(life.GetHashCode(), life.GetHashCode());
+            Assert.AreEqual(life.GetHashCode(), life_eq.GetHashCode());
+        }
+        
+        [TestMethod]
+        public void TestGetHashCodeNotEq()
+        {
+            var life = LifeStyle.Transient;
+            var life_eq = LifeStyle.Scoped;
+            
+            Assert.AreNotEqual(life.GetHashCode(), life_eq.GetHashCode());
         }
     }
 }
