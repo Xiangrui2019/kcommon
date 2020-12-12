@@ -1,9 +1,10 @@
 ﻿using KCommon.Core.Autofac;
 using KCommon.Core.Components;
+using KCommon.Core.Configurations;
 using KCommon.Core.UnitTests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace KCommon.Core.UnitTests
+namespace KCommon.Core.UnitTests.Configurations
 {
     [TestClass]
     public class ConfigurationTest
