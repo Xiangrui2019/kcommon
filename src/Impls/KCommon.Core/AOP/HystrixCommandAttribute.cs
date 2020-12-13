@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AspectCore.DynamicProxy;
 using Polly;
+using Polly.Fallback;
+using Polly.Wrap;
 
 namespace KCommon.Core.AOP
 {
@@ -39,7 +41,7 @@ namespace KCommon.Core.AOP
         /// </summary>
         public int TimeOutMilliseconds { get; set; } = 0;
 
-        private static ConcurrentDictionary<MethodInfo, Policy> policies = new ConcurrentDictionary<MethodInfo, Policy>();
+        private static ConcurrentDictionary<MethodInfo, IAsyncPolicy> policies = new ConcurrentDictionary<MethodInfo, IAsyncPolicy>();
 
         /// <summary>
         /// 
@@ -47,7 +49,7 @@ namespace KCommon.Core.AOP
         /// <param name="fallBackMethod">降级的方法名</param>
         public HystrixCommandAttribute(string fallBackMethod)
         {
-            this.FallBackMethod = fallBackMethod;
+            FallBackMethod = fallBackMethod;
         }
 
         public string FallBackMethod { get; set; }
@@ -58,12 +60,13 @@ namespace KCommon.Core.AOP
             //其实主要是CircuitBreaker要求对于同一段代码要共享一个policy对象
             //根据反射原理，同一个方法的MethodInfo是同一个对象，但是对象上取出来的HystrixCommandAttribute
             //每次获取的都是不同的对象，因此以MethodInfo为Key保存到policies中，确保一个方法对应一个policy实例
-            policies.TryGetValue(context.ServiceMethod,out Policy policy);
+            policies.TryGetValue(context.ServiceMethod, out IAsyncPolicy policy);
             lock (policies)//因为Invoke可能是并发调用，因此要确保policies赋值的线程安全
             {
                 if (policy == null)
                 {
-                    policy = Policy.NoOpAsync();//创建一个空的Policy
+                    policy = Policy.NoOpAsync();
+
                     if (EnableCircuitBreaker)
                     {
                         policy = policy.WrapAsync(Policy.Handle<Exception>().CircuitBreakerAsync(ExceptionsAllowedBeforeBreaking, TimeSpan.FromMilliseconds(MillisecondsOfBreak)));
@@ -76,24 +79,25 @@ namespace KCommon.Core.AOP
                     {
                         policy = policy.WrapAsync(Policy.Handle<Exception>().WaitAndRetryAsync(MaxRetryTimes, i => TimeSpan.FromMilliseconds(RetryIntervalMilliseconds)));
                     }
-                    Policy policyFallBack = Policy
-                    .Handle<Exception>()
-                    .FallbackAsync(async (ctx, t) =>
-                    {
-                        AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
-                        //var fallBackMethod = context.ServiceMethod.DeclaringType.GetMethod(this.FallBackMethod);
-                        //merge this issue: https://github.com/yangzhongke/RuPeng.HystrixCore/issues/2
-                        var fallBackMethod = context.ImplementationMethod.DeclaringType.GetMethod(this.FallBackMethod);
-                        Object fallBackResult = fallBackMethod.Invoke(context.Implementation, context.Parameters);
-                        //不能如下这样，因为这是闭包相关，如果这样写第二次调用Invoke的时候context指向的
-                        //还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
-                        //context.ReturnValue = fallBackResult;
-                        aspectContext.ReturnValue = fallBackResult;
-                    }, async (ex, t) => { });
+
+                    AsyncFallbackPolicy policyFallBack = Policy
+                        .Handle<Exception>()
+                        .FallbackAsync(async (ctx, t) =>
+                        {
+                            AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
+                            //var fallBackMethod = context.ServiceMethod.DeclaringType.GetMethod(this.FallBackMethod);
+                            //merge this issue: https://github.com/yangzhongke/RuPeng.HystrixCore/issues/2
+                            var fallBackMethod = context.ImplementationMethod.DeclaringType.GetMethod(this.FallBackMethod);
+                            Object fallBackResult = fallBackMethod.Invoke(context.Implementation, context.Parameters);
+                            //不能如下这样，因为这是闭包相关，如果这样写第二次调用Invoke的时候context指向的
+                            //还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
+                            //context.ReturnValue = fallBackResult;
+                            aspectContext.ReturnValue = fallBackResult;
+                        }, async (ex, t) => { });
 
                     policy = policyFallBack.WrapAsync(policy);
                     //放入
-                    policies.TryAdd(context.ServiceMethod,policy);
+                    policies.TryAdd(context.ServiceMethod, policy);
                 }
             }
 

@@ -27,9 +27,11 @@ namespace KCommon.Core.UnitTests.AOP
         [TestMethod]
         public void TestMethod1()
         {
-            _service.HelloAsync("Test")
+            var v = _service.HelloAsync("Test")
                 .GetAwaiter()
                 .GetResult();
+            
+            Assert.AreEqual(v, "fail_2");
         }
 
         [TestMethod]
