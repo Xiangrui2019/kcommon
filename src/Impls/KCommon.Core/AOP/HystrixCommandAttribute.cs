@@ -41,10 +41,16 @@ namespace KCommon.Core.AOP
         /// </summary>
         public int TimeOutMilliseconds { get; set; } = 0;
 
-        private static ConcurrentDictionary<MethodInfo, IAsyncPolicy> policies = new ConcurrentDictionary<MethodInfo, IAsyncPolicy>();
-
+        /// <summary>
+        /// 是否启用回退
+        /// </summary>
         public bool EnableFallBack { get; set; } = false;
+        /// <summary>
+        /// 回退后执行的方法
+        /// </summary>
         public string FallBackMethod { get; set; } = null;
+        
+        private static ConcurrentDictionary<MethodInfo, IAsyncPolicy> policies = new ConcurrentDictionary<MethodInfo, IAsyncPolicy>();
 
         public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
