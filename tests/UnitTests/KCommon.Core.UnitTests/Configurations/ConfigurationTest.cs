@@ -40,5 +40,16 @@ namespace KCommon.Core.UnitTests.Configurations
 
             ObjectContainer.Resolve<MockTestService>().Test();
         }
+        
+        [TestMethod]
+        public void TestUnhandledHandler()
+        {
+            Configuration
+                .Create()
+                .UseAutofac()
+                .RegisterCommonComponents()
+                .RegisterUnhandledExceptionHandler()
+                .BuildContainer();
+        }
     }
 }

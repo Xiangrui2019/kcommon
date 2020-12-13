@@ -62,14 +62,9 @@ namespace KCommon.Core.Configurations
             {
                 var loggerFactory = ObjectContainer.Resolve<ILoggerFactory>();
 
-                if (loggerFactory != null)
-                {
-                    var logger = loggerFactory.Create(GetType().FullName);
-                    if (logger != null)
-                    {
-                        logger.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
-                    }
-                }
+                if (loggerFactory == null) return;
+                var logger = loggerFactory.Create(GetType().FullName);
+                logger?.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
             };
 
             return this;
