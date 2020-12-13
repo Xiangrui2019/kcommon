@@ -61,7 +61,7 @@ namespace KCommon.Core.UnitTests.Utilities
         }
     }
 
-    internal class V
+    internal partial class V
     {
         [Range(1, 10)]
         public int A { get; set; }
