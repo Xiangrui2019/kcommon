@@ -17,7 +17,9 @@
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Autofac\KCommon.Core.Autofac.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.JsonNet\KCommon.Core.JsonNet.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.MemoryCache\KCommon.Core.MemoryCache.csproj" />
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.MessagePack\KCommon.Core.MessagePack.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Nlog\KCommon.Core.Nlog.csproj" />
+    <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.ProtoBuf\KCommon.Core.ProtoBuf.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.RedisCache\KCommon.Core.RedisCache.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Serilog\KCommon.Core.Serilog.csproj" />
     <ProjectReference Include="..\..\..\src\Impls\KCommon.Core.Text.Json\KCommon.Core.Text.Json.csproj" />
