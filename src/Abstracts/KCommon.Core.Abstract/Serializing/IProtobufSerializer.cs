@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace KCommon.Core.Abstract.Serializing
+﻿namespace KCommon.Core.Abstract.Serializing
 {
-    public interface IMessagePackSerializer
+    public interface IProtobufSerializer
     {
         byte[] Serialize(object obj);
         T Deserialize<T>(byte[] data) where T : class;

@@ -49,6 +49,7 @@ namespace KCommon.Core.Configurations
             SetDefault<IJsonSerializer, NotImplementedJsonSerializer>();
             SetDefault<IBinarySerializer, DefaultBinarySerializer>();
             SetDefault<IMessagePackSerializer, NotImplementedMessagePackSerializer>();
+            SetDefault<IProtobufSerializer, NotImplementedProtobufSerializer>();
             SetDefault<IHttpService, EmptyHttpService>();
             SetDefault<ICache, EmptyCache>();
             SetDefault<Cannon, Cannon>();
