@@ -1,4 +1,5 @@
-﻿using KCommon.Core.Abstract.Caching;
+﻿using System;
+using KCommon.Core.Abstract.Caching;
 using KCommon.Core.Abstract.Components;
 using KCommon.Core.Abstract.Http;
 using KCommon.Core.Abstract.Logging;
@@ -52,6 +53,25 @@ namespace KCommon.Core.Configurations
             SetDefault<ICache, EmptyCache>();
             SetDefault<Cannon, Cannon>();
             
+            return this;
+        }
+        
+        public Configuration RegisterUnhandledExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                var loggerFactory = ObjectContainer.Resolve<ILoggerFactory>();
+
+                if (loggerFactory != null)
+                {
+                    var logger = loggerFactory.Create(GetType().FullName);
+                    if (logger != null)
+                    {
+                        logger.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
+                    }
+                }
+            };
+
             return this;
         }
         
