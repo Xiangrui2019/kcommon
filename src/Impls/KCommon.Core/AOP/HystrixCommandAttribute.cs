@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using AspectCore.DynamicProxy;
 using Polly;
 using Polly.Fallback;
-using Polly.Wrap;
 
 namespace KCommon.Core.AOP
 {
+    [AttributeUsage(AttributeTargets.Method)]
     public class HystrixCommandAttribute : AbstractInterceptorAttribute
     {
         /// <summary>
