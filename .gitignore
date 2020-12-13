@@ -16,7 +16,10 @@
 # Mono auto generated files
 mono_crash.*
 
+.vs
+.idea
 .vs/
+.idea/
 
 # Build results
 [Dd]ebug/
