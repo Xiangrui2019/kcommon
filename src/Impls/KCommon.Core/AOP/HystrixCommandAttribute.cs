@@ -43,16 +43,8 @@ namespace KCommon.Core.AOP
 
         private static ConcurrentDictionary<MethodInfo, IAsyncPolicy> policies = new ConcurrentDictionary<MethodInfo, IAsyncPolicy>();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fallBackMethod">降级的方法名</param>
-        public HystrixCommandAttribute(string fallBackMethod)
-        {
-            FallBackMethod = fallBackMethod;
-        }
-
-        public string FallBackMethod { get; set; }
+        public bool EnableFallBack { get; set; } = false;
+        public string FallBackMethod { get; set; } = null;
 
         public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
@@ -79,23 +71,26 @@ namespace KCommon.Core.AOP
                     {
                         policy = policy.WrapAsync(Policy.Handle<Exception>().WaitAndRetryAsync(MaxRetryTimes, i => TimeSpan.FromMilliseconds(RetryIntervalMilliseconds)));
                     }
+                    if (EnableFallBack)
+                    {
+                        AsyncFallbackPolicy policyFallBack = Policy
+                            .Handle<Exception>()
+                            .FallbackAsync(async (ctx, t) =>
+                            {
+                                AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
+                                //var fallBackMethod = context.ServiceMethod.DeclaringType.GetMethod(this.FallBackMethod);
+                                //merge this issue: https://github.com/yangzhongke/RuPeng.HystrixCore/issues/2
+                                var fallBackMethod = context.ImplementationMethod.DeclaringType.GetMethod(this.FallBackMethod);
+                                Object fallBackResult = fallBackMethod.Invoke(context.Implementation, context.Parameters);
+                                //不能如下这样，因为这是闭包相关，如果这样写第二次调用Invoke的时候context指向的
+                                //还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
+                                //context.ReturnValue = fallBackResult;
+                                aspectContext.ReturnValue = fallBackResult;
+                            }, async (ex, t) => { });
 
-                    AsyncFallbackPolicy policyFallBack = Policy
-                        .Handle<Exception>()
-                        .FallbackAsync(async (ctx, t) =>
-                        {
-                            AspectContext aspectContext = (AspectContext)ctx["aspectContext"];
-                            //var fallBackMethod = context.ServiceMethod.DeclaringType.GetMethod(this.FallBackMethod);
-                            //merge this issue: https://github.com/yangzhongke/RuPeng.HystrixCore/issues/2
-                            var fallBackMethod = context.ImplementationMethod.DeclaringType.GetMethod(this.FallBackMethod);
-                            Object fallBackResult = fallBackMethod.Invoke(context.Implementation, context.Parameters);
-                            //不能如下这样，因为这是闭包相关，如果这样写第二次调用Invoke的时候context指向的
-                            //还是第一次的对象，所以要通过Polly的上下文来传递AspectContext
-                            //context.ReturnValue = fallBackResult;
-                            aspectContext.ReturnValue = fallBackResult;
-                        }, async (ex, t) => { });
-
-                    policy = policyFallBack.WrapAsync(policy);
+                        policy = policyFallBack.WrapAsync(policy);
+                    }
+                    
                     //放入
                     policies.TryAdd(context.ServiceMethod, policy);
                 }
